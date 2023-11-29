@@ -1,10 +1,20 @@
 <script setup lang="ts">
   import useStore from '@/store';
+  const router = useRouter();
   const { login } = useStore();
+  console.log(router);
+
   login.num = 2;
+  const testClick = () => {
+    console.log('testClick');
+    router.push('/home');
+  };
 </script>
 
-<template><div></div></template>
+<template>
+  <div @click="testClick">2121</div>
+  <RouterView></RouterView>
+</template>
 
 <style scoped>
   .logo {
