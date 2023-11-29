@@ -4,7 +4,7 @@ const { login } = useStore();
 login.num = 2;
 </script>
 
-<template></template>
+<template><div></div></template>
 
 <style scoped>
 .logo {

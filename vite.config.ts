@@ -4,7 +4,7 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import path from "path";
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(() => {
   return {
     plugins: [
       vue(),
