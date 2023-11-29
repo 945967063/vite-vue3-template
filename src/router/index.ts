@@ -8,7 +8,11 @@ export const BaseRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/views/login/index.vue'),
   },
 ];
-
+export const PageNotFound: RouteRecordRaw = {
+  path: '/:path(.*)',
+  name: '404',
+  component: () => import('@/views/errer/index.vue'),
+};
 const router = createRouter({
   history: createWebHistory(),
   routes: BaseRoutes,
