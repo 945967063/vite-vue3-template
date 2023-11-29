@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HelloWorld from "./components/HelloWorld.vue";
-import useStore from "./store";
+import useStore from "@/store";
 const { login } = useStore();
 login.num = 2;
 </script>
