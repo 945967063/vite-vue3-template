@@ -1,13 +1,8 @@
 <template>
   <div>
     <a-space>
-      <a-input :style="{ width: '320px' }" placeholder="Please enter something" allow-clear />
-      <a-input
-        :style="{ width: '320px' }"
-        default-value="content"
-        placeholder="Please enter something"
-        allow-clear
-      />
+      <a-input class="w-40" placeholder="Please enter something" allow-clear />
+      <a-input default-value="content" placeholder="Please enter something" allow-clear />
     </a-space>
     <a-date-picker />
     <a-space>
