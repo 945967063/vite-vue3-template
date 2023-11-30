@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 export default defineStore('login', {
   state: () => ({
     num: 0,
+    /**菜单是否折叠 */
+    isCollapse: false,
   }),
   actions: {},
   //数据持久化配置 这里是当前所有变量都持久化
