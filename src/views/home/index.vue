@@ -4,6 +4,9 @@
       <a-input class="w-40" placeholder="Please enter something" allow-clear />
       <a-input default-value="content" placeholder="Please enter something" allow-clear />
     </a-space>
+    <icon-arrow-down />
+  </div>
+  <div>
     <a-date-picker />
     <a-space>
       <a-button type="primary" @click="handleNotification">Top Right</a-button>

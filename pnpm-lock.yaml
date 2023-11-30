@@ -23,6 +23,9 @@ dependencies:
   vue:
     specifier: ^3.3.8
     version: registry.npmmirror.com/vue@3.3.8(typescript@5.2.2)
+  vue-i18n:
+    specifier: ^9.8.0
+    version: registry.npmmirror.com/vue-i18n@9.8.0(vue@3.3.8)
   vue-router:
     specifier: '4'
     version: registry.npmmirror.com/vue-router@4.2.5(vue@3.3.8)
@@ -857,6 +860,33 @@ packages:
     name: '@humanwhocodes/object-schema'
     version: 2.0.1
     dev: true
+
+  registry.npmmirror.com/@intlify/core-base@9.8.0:
+    resolution: {integrity: sha512-UxaSZVZ1DwqC/CltUZrWZNaWNhfmKtfyV4BJSt/Zt4Or/fZs1iFj0B+OekYk1+MRHfIOe3+x00uXGQI4PbO/9g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@intlify/core-base/-/core-base-9.8.0.tgz}
+    name: '@intlify/core-base'
+    version: 9.8.0
+    engines: {node: '>= 16'}
+    dependencies:
+      '@intlify/message-compiler': registry.npmmirror.com/@intlify/message-compiler@9.8.0
+      '@intlify/shared': registry.npmmirror.com/@intlify/shared@9.8.0
+    dev: false
+
+  registry.npmmirror.com/@intlify/message-compiler@9.8.0:
+    resolution: {integrity: sha512-McnYWhcoYmDJvssVu6QGR0shqlkJuL1HHdi5lK7fNqvQqRYaQ4lSLjYmZxwc8tRNMdIe9/KUKfyPxU9M6yCtNQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@intlify/message-compiler/-/message-compiler-9.8.0.tgz}
+    name: '@intlify/message-compiler'
+    version: 9.8.0
+    engines: {node: '>= 16'}
+    dependencies:
+      '@intlify/shared': registry.npmmirror.com/@intlify/shared@9.8.0
+      source-map-js: registry.npmmirror.com/source-map-js@1.0.2
+    dev: false
+
+  registry.npmmirror.com/@intlify/shared@9.8.0:
+    resolution: {integrity: sha512-TmgR0RCLjzrSo+W3wT0ALf9851iFMlVI9EYNGeWvZFUQTAJx0bvfsMlPdgVtV1tDNRiAfhkFsMKu6jtUY1ZLKQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@intlify/shared/-/shared-9.8.0.tgz}
+    name: '@intlify/shared'
+    version: 9.8.0
+    engines: {node: '>= 16'}
+    dev: false
 
   registry.npmmirror.com/@jridgewell/gen-mapping@0.3.3:
     resolution: {integrity: sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.3.tgz}
@@ -4760,6 +4790,21 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  registry.npmmirror.com/vue-i18n@9.8.0(vue@3.3.8):
+    resolution: {integrity: sha512-Izho+6PYjejsTq2mzjcRdBZ5VLRQoSuuexvR8029h5CpN03FYqiqBrShMyf2I1DKkN6kw/xmujcbvC+4QybpsQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-i18n/-/vue-i18n-9.8.0.tgz}
+    id: registry.npmmirror.com/vue-i18n/9.8.0
+    name: vue-i18n
+    version: 9.8.0
+    engines: {node: '>= 16'}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      '@intlify/core-base': registry.npmmirror.com/@intlify/core-base@9.8.0
+      '@intlify/shared': registry.npmmirror.com/@intlify/shared@9.8.0
+      '@vue/devtools-api': registry.npmmirror.com/@vue/devtools-api@6.5.1
+      vue: registry.npmmirror.com/vue@3.3.8(typescript@5.2.2)
+    dev: false
 
   registry.npmmirror.com/vue-router@4.2.5(vue@3.3.8):
     resolution: {integrity: sha512-DIUpKcyg4+PTQKfFPX88UWhlagBEBEfJ5A8XDXRJLUnZOvcpMF8o/dnL90vpVkGaPbjvXazV/rC1qBKrZlFugw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-router/-/vue-router-4.2.5.tgz}
