@@ -7,6 +7,23 @@ export const BaseRoutes: Array<RouteRecordRaw> = [
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
   },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import('@/layout/index.vue'),
+    redirect: '/welcome',
+    meta: {
+      icon: 'homeFilled',
+      title: '首页',
+    },
+    children: [
+      {
+        path: '/welcome',
+        name: 'Welcome',
+        component: () => import('@/views/home/index.vue'),
+      },
+    ],
+  },
 ];
 export const PageNotFound: RouteRecordRaw = {
   path: '/:path(.*)',
