@@ -2,47 +2,48 @@
   <div class="menu-demo">
     <a-menu
       :style="{ width: '100%', height: '100%' }"
-      :default-open-keys="['0']"
-      :default-selected-keys="['0_2']"
       show-collapse-button
+      :default-selected-keys="active"
       breakpoint="xl"
       @collapse="onCollapse"
+      :selected-keys="selectedKeys"
+      @menu-item-click="menuCLick"
     >
-      <a-sub-menu key="0">
-        <template #icon><icon-apps></icon-apps></template>
-        <template #title>Navigation 1</template>
-        <a-menu-item key="0_0">Menu 1</a-menu-item>
-        <a-menu-item key="0_1">Menu 2</a-menu-item>
-        <a-menu-item key="0_2">Menu 3</a-menu-item>
-        <a-menu-item key="0_3">Menu 4</a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="1">
-        <template #icon><icon-bug></icon-bug></template>
-        <template #title>Navigation 2</template>
-        <a-menu-item key="1_0">Menu 1</a-menu-item>
-        <a-menu-item key="1_1">Menu 2</a-menu-item>
-        <a-menu-item key="1_2">Menu 3</a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="2">
-        <template #icon><icon-bulb></icon-bulb></template>
-        <template #title>Navigation 3</template>
-        <a-menu-item key="2_0">Menu 1</a-menu-item>
-        <a-menu-item key="2_1">Menu 2</a-menu-item>
-        <a-sub-menu key="2_2" title="Navigation 4">
-          <a-menu-item key="2_2_0">Menu 1</a-menu-item>
-          <a-menu-item key="2_2_1">Menu 2</a-menu-item>
+      <template v-for="item in routers.asyncRouter" :key="item.path">
+        <a-menu-item v-if="!item.meta?.rank" :key="item.path">
+          <template #icon><icon-apps></icon-apps></template>
+          {{ item.meta?.title }}
+        </a-menu-item>
+        <a-sub-menu v-else>
+          <template #icon><icon-apps></icon-apps></template>
+          <template #title>{{ item.meta?.title }}</template>
+          <a-menu-item v-for="item1 in item.children" :key="item1.path">
+            {{ item1.meta?.title }}
+          </a-menu-item>
         </a-sub-menu>
-      </a-sub-menu>
+      </template>
     </a-menu>
   </div>
 </template>
 <script setup lang="ts">
-  import { IconApps, IconBug, IconBulb } from '@arco-design/web-vue/es/icon';
+  import { IconApps } from '@arco-design/web-vue/es/icon';
   import useStore from '@/store';
-  const { login } = useStore();
+  const router = useRouter();
+  const route = useRoute();
+  const { login, routers } = useStore();
   const onCollapse = (val: boolean) => {
     login.isCollapse = val;
   };
+  const selectedKeys = ref<string[]>([]);
+  const menuCLick = (e: string) => {
+    selectedKeys.value = [e];
+    router.push(e);
+  };
+  const active = computed(() => {
+    const str = route.fullPath;
+    selectedKeys.value = [str];
+    return [str];
+  });
 </script>
 <style lang="scss" scoped>
   .menu-demo {

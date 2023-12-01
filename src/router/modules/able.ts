@@ -8,6 +8,7 @@ const AbleRouter: RouteRecordRaw = {
   meta: {
     title: '功能',
     icon: 'avatar',
+    rank: 'able',
   },
   children: [
     {
