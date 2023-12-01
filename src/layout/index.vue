@@ -26,9 +26,9 @@
   const { currentLocale } = useLocale();
   const locale = computed(() => {
     switch (currentLocale.value) {
-      case 'zh-CN':
+      case 'cn':
         return zhCN;
-      case 'en-US':
+      case 'en':
         return enUS;
       default:
         return enUS;

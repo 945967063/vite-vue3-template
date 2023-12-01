@@ -14,13 +14,12 @@
     </div>
     <div class="right-side">
       <div>
-        <a-tooltip :content="$t('settings.language')">
-          <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setDropDownVisible">
-            <template #icon>
-              <icon-language />
-            </template>
-          </a-button>
-        </a-tooltip>
+        <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setDropDownVisible">
+          <template #icon>
+            <icon-language />
+          </template>
+        </a-button>
+
         <a-dropdown trigger="click" @select="changeLocale as any">
           <div ref="triggerBtn" class="trigger-btn"></div>
           <template #content>
@@ -34,34 +33,20 @@
         </a-dropdown>
       </div>
       <div>
-        <a-tooltip
-          :content="
-            theme === 'light'
-              ? $t('settings.navbar.theme.toDark')
-              : $t('settings.navbar.theme.toLight')
-          "
-        >
-          <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
-            <template #icon>
-              <icon-moon-fill v-if="theme === 'dark'" />
-              <icon-sun-fill v-else />
-            </template>
-          </a-button>
-        </a-tooltip>
+        <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
+          <template #icon>
+            <icon-moon-fill v-if="theme === 'dark'" />
+            <icon-sun-fill v-else />
+          </template>
+        </a-button>
       </div>
       <div>
-        <a-tooltip
-          :content="
-            isFullscreen ? $t('settings.navbar.screen.toExit') : $t('settings.navbar.screen.toFull')
-          "
-        >
-          <a-button class="nav-btn" type="outline" :shape="'circle'" @click="toggleFullScreen">
-            <template #icon>
-              <icon-fullscreen-exit v-if="isFullscreen" />
-              <icon-fullscreen v-else />
-            </template>
-          </a-button>
-        </a-tooltip>
+        <a-button class="nav-btn" type="outline" :shape="'circle'" @click="toggleFullScreen">
+          <template #icon>
+            <icon-fullscreen-exit v-if="isFullscreen" />
+            <icon-fullscreen v-else />
+          </template>
+        </a-button>
       </div>
 
       <div>
@@ -74,7 +59,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { LOCALE_OPTIONS } from '@/locale';
+  import { LOCALE_OPTIONS } from '@/i18n';
   import useLocale from '@/hooks/locale';
   import { useDark, useToggle, useFullscreen } from '@vueuse/core';
   import useStore from '@/store';
@@ -141,3 +126,4 @@
     }
   }
 </style>
+@/i18n

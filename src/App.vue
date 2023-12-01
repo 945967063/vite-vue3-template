@@ -3,13 +3,12 @@
   import enUS from '@arco-design/web-vue/es/locale/lang/en-us';
   import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
   import useLocale from '@/hooks/locale';
-
   const { currentLocale } = useLocale();
   const locale = computed(() => {
     switch (currentLocale.value) {
-      case 'zh-CN':
+      case 'cn':
         return zhCN;
-      case 'en-US':
+      case 'en':
         return enUS;
       default:
         return enUS;
