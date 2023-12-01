@@ -1,28 +1,13 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { App } from 'vue';
 import { CreateRouterGuards } from './guards';
+import AbleRouter from './modules/able';
+import HomeRoutes from './modules/home';
 export const BaseRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: () => import('@/layout/index.vue'),
-    redirect: '/welcome',
-    meta: {
-      icon: 'homeFilled',
-      title: '首页',
-    },
-    children: [
-      {
-        path: '/welcome',
-        name: 'Welcome',
-        component: () => import('@/views/home/index.vue'),
-      },
-    ],
   },
 ];
 export const PageNotFound: RouteRecordRaw = {
@@ -30,6 +15,12 @@ export const PageNotFound: RouteRecordRaw = {
   name: '404',
   component: () => import('@/views/errer/index.vue'),
 };
+export const AsyncRoutes: RouteRecordRaw[] = [
+  /**首页 */
+  HomeRoutes,
+  /**功能 */
+  AbleRouter,
+];
 const router = createRouter({
   history: createWebHistory(),
   routes: BaseRoutes,

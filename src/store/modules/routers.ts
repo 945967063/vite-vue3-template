@@ -1,9 +1,8 @@
-import { BaseRoutes, PageNotFound } from '@/router';
+import { BaseRoutes, PageNotFound, AsyncRoutes } from '@/router';
 import { RouteRecordRaw } from 'vue-router';
 interface IState {
   router: RouteRecordRaw[];
   asyncRouter: RouteRecordRaw[];
-  setRouters: RouteRecordRaw[];
 }
 
 export default defineStore('routers', {
@@ -11,15 +10,14 @@ export default defineStore('routers', {
     return {
       router: [],
       asyncRouter: [],
-      /**设置里面的路由 */
-      setRouters: [],
     };
   },
 
   actions: {
     /**获取路由 */
     async getAsyncRouter() {
-      this.router = BaseRoutes.concat(PageNotFound);
+      this.router = BaseRoutes.concat(AsyncRoutes).concat(PageNotFound);
+      this.asyncRouter = AsyncRoutes;
       return this.router;
     },
   },
