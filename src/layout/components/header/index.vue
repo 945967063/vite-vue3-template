@@ -33,7 +33,42 @@
           </template>
         </a-dropdown>
       </div>
-      <div>212121221212212</div>
+      <div>
+        <a-tooltip
+          :content="
+            theme === 'light'
+              ? $t('settings.navbar.theme.toDark')
+              : $t('settings.navbar.theme.toLight')
+          "
+        >
+          <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
+            <template #icon>
+              <icon-moon-fill v-if="theme === 'dark'" />
+              <icon-sun-fill v-else />
+            </template>
+          </a-button>
+        </a-tooltip>
+      </div>
+      <div>
+        <a-tooltip
+          :content="
+            isFullscreen ? $t('settings.navbar.screen.toExit') : $t('settings.navbar.screen.toFull')
+          "
+        >
+          <a-button class="nav-btn" type="outline" :shape="'circle'" @click="toggleFullScreen">
+            <template #icon>
+              <icon-fullscreen-exit v-if="isFullscreen" />
+              <icon-fullscreen v-else />
+            </template>
+          </a-button>
+        </a-tooltip>
+      </div>
+
+      <div>
+        <a-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
+          <img alt="avatar" src="https://avatars.githubusercontent.com/u/89059293?v=4" />
+        </a-avatar>
+      </div>
     </div>
   </div>
 </template>
@@ -41,12 +76,14 @@
 <script lang="ts" setup>
   import { LOCALE_OPTIONS } from '@/locale';
   import useLocale from '@/hooks/locale';
+  import { useDark, useToggle, useFullscreen } from '@vueuse/core';
+  import useStore from '@/store';
+  const { login } = useStore();
   const { changeLocale, currentLocale } = useLocale();
+  const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
   const locales = [...LOCALE_OPTIONS];
   const triggerBtn = ref();
   const setDropDownVisible = () => {
-    console.log(232);
-
     const event = new MouseEvent('click', {
       view: window,
       bubbles: true,
@@ -54,6 +91,25 @@
     });
     triggerBtn.value.dispatchEvent(event);
   };
+  const isDark = useDark({
+    selector: 'body',
+    attribute: 'arco-theme',
+    valueDark: 'dark',
+    valueLight: 'light',
+    storageKey: 'arco-theme',
+    onChanged(dark: boolean) {
+      // overridden default behavior
+      login.toggleTheme(dark);
+    },
+  });
+  const theme = computed(() => {
+    return login.theme;
+  });
+
+  const handleToggleTheme = () => {
+    toggleTheme();
+  };
+  const toggleTheme = useToggle(isDark);
 </script>
 
 <style scoped lang="scss">
@@ -80,5 +136,8 @@
     padding-right: 20px;
     align-items: center;
     list-style: none;
+    & > div {
+      margin-left: 20px;
+    }
   }
 </style>
