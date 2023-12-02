@@ -14,7 +14,8 @@
     "format": "prettier --write \"./**/*.{html,vue,js,ts,json,md}\" ",
     "lint:style": "stylelint src/**/*.{css,scss,vue} --cache --fix",
     "prepare": "husky install",
-    "commitlint": "commitlint --config commitlint.config.cjs -e -V"
+    "commitlint": "commitlint --config commitlint.config.cjs -e -V",
+    "api": "rimraf ./src/servicesDefault && pont list"
   },
   "dependencies": {
     "@arco-themes/vue-sqraycss": "^0.0.1",
@@ -44,6 +45,7 @@
     "eslint-plugin-vue": "^9.18.1",
     "husky": "^8.0.0",
     "less": "^4.2.0",
+    "pont-engine": "^1.5.12",
     "postcss": "^8.4.31",
     "prettier": "^3.1.0",
     "tailwindcss": "^3.3.5",

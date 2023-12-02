@@ -1,0 +1,11 @@
+{
+  "origins": [
+    {
+      "originType": "SwaggerV3",
+      "originUrl": ""
+    }
+  ],
+  "templatePath": "./pontTemplate",
+  "outDir": "./src/servicesDefault",
+  "transformPath": "./transformTemplate"
+}
