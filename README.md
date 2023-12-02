@@ -1,6 +1,6 @@
 ## 介绍
 
-基于 Vue3+Vite+Pnpm+Element-plus+Pinia+Vue-Router+Tailwindcss+Eslint+Prettier+Husky+lint-staged+commitlint 的项目。
+基于 Vue3+Vite+Pnpm+arco.design+Pinia+Vue-Router+Tailwindcss+Eslint+Prettier+Husky+lint-staged+commitlint 的项目。
 
 ## 开始
 

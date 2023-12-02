@@ -22,4 +22,9 @@
   </a-config-provider>
 </template>
 
-<style scoped></style>
+<style>
+  #nprogress .bar {
+    /* 自定义进度条颜色 */
+    background: rgb(var(--primary-6)) !important;
+  }
+</style>
