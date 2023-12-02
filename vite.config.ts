@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
@@ -7,7 +7,9 @@ import { vitePluginForArco } from '@arco-plugins/vite-vue';
 import path from 'path';
 const Timestamp = new Date().getTime();
 // https://vitejs.dev/config/
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd());
+  const { VITE_APP_NAME } = env;
   return {
     plugins: [
       vue(),
@@ -26,6 +28,7 @@ export default defineConfig(() => {
       vitePluginForArco({
         theme: '@arco-themes/vue-sqraycss',
       }),
+      // viteBuildInfo(),
     ],
     //配置路径别名
     resolve: {
@@ -36,6 +39,7 @@ export default defineConfig(() => {
       },
     },
     build: {
+      outDir: VITE_APP_NAME,
       chunkSizeWarningLimit: 1000, // 提高超大静态资源警告大小
       minify: 'terser',
       brotliSize: false, //启用/禁用 brotli 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。
