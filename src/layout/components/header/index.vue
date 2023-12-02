@@ -1,65 +1,66 @@
 <template>
   <div class="navbar">
     <div class="left-side">
-      <a-space>
+      <el-space>
         <img
           class="w-[33px] h-[33px] rounded-[33px]"
           alt="logo"
           src="https://avatars.githubusercontent.com/u/89059293?v=4"
         />
-        <a-typography-title :style="{ margin: 0, fontSize: '18px' }" :heading="5">
-          酌饮慢思倾楼
-        </a-typography-title>
-      </a-space>
+
+        酌饮慢思倾楼
+      </el-space>
     </div>
     <div class="right-side">
       <div>
-        <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setDropDownVisible">
+        <el-button class="nav-btn" type="primary" plain @click="setDropDownVisible">
           <template #icon>
             <icon-language />
           </template>
-        </a-button>
+        </el-button>
 
-        <a-dropdown trigger="click" @select="changeLocale as any">
+        <el-dropdown trigger="click" @select="changeLocale as any">
           <div ref="triggerBtn" class="trigger-btn"></div>
-          <template #content>
-            <a-doption v-for="item in locales" :key="item.value" :value="item.value">
-              <template #icon>
-                <icon-check v-show="item.value === currentLocale" />
-              </template>
-              {{ item.label }}
-            </a-doption>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item v-for="item in locales" :key="item.value" :value="item.value">
+                <template #icon>
+                  <icon-check v-show="item.value === currentLocale" />
+                </template>
+                {{ item.label }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
           </template>
-        </a-dropdown>
+        </el-dropdown>
       </div>
       <div>
-        <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
+        <el-button class="nav-btn" type="primary" plain @click="handleToggleTheme">
           <template #icon>
-            <icon-moon-fill v-if="theme === 'dark'" />
-            <icon-sun-fill v-else />
+            <div v-if="theme === 'dark'">黑</div>
+            <div v-else>白</div>
           </template>
-        </a-button>
+        </el-button>
       </div>
       <div>
-        <a-button class="nav-btn" type="outline" :shape="'circle'" @click="toggleFullScreen">
-          <template #icon>
-            <icon-fullscreen-exit v-if="isFullscreen" />
-            <icon-fullscreen v-else />
-          </template>
-        </a-button>
+        <el-button
+          type="primary"
+          :icon="isFullscreen ? 'FullScreen' : 'FullScreen'"
+          circle
+          @click="toggleFullScreen"
+        />
       </div>
 
       <div>
-        <a-dropdown trigger="click">
-          <a-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
+        <el-dropdown @command="handleCommand">
+          <el-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
             <img alt="avatar" src="https://avatars.githubusercontent.com/u/89059293?v=4" />
-          </a-avatar>
-          <template #content>
-            <a-doption>
-              <a-space @click="handleLogout">退出登录</a-space>
-            </a-doption>
+          </el-avatar>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
           </template>
-        </a-dropdown>
+        </el-dropdown>
       </div>
     </div>
   </div>
@@ -84,11 +85,8 @@
     triggerBtn.value.dispatchEvent(event);
   };
   const isDark = useDark({
-    selector: 'body',
-    attribute: 'arco-theme',
     valueDark: 'dark',
     valueLight: 'light',
-    storageKey: 'arco-theme',
     onChanged(dark: boolean) {
       // overridden default behavior
       login.toggleTheme(dark);
@@ -103,8 +101,10 @@
   };
   const toggleTheme = useToggle(isDark);
 
-  const handleLogout = () => {
-    login.logout();
+  const handleCommand = (command: string | number | object) => {
+    if (command === 'logout') {
+      login.logout();
+    }
   };
 </script>
 

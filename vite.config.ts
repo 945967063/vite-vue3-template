@@ -2,8 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { ArcoResolver } from 'unplugin-vue-components/resolvers';
-import { vitePluginForArco } from '@arco-plugins/vite-vue';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import path from 'path';
 const Timestamp = new Date().getTime();
 // https://vitejs.dev/config/
@@ -11,24 +10,22 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   const { VITE_APP_NAME } = env;
   return {
+    //自定义主题
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "~/assets/styles/element-variarbles.scss" as *;`,
+        },
+      },
+    },
     plugins: [
       vue(),
       AutoImport({
         imports: ['vue', 'vue-router', 'pinia'],
         dts: 'src/auto-imports.d.ts',
-        resolvers: [ArcoResolver()],
+        resolvers: [ElementPlusResolver()],
       }),
-      Components({
-        resolvers: [
-          ArcoResolver({
-            sideEffect: true,
-          }),
-        ],
-      }),
-      vitePluginForArco({
-        theme: '@arco-themes/vue-sqraycss',
-      }),
-      // viteBuildInfo(),
+      Components({ resolvers: [ElementPlusResolver({ importStyle: 'sass' })] }),
     ],
     //配置路径别名
     resolve: {

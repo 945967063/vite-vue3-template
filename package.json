@@ -18,9 +18,9 @@
     "api": "rimraf ./src/servicesDefault && pont list"
   },
   "dependencies": {
-    "@arco-themes/vue-sqraycss": "^0.0.1",
     "@vueuse/core": "^10.6.1",
     "axios": "^1.6.2",
+    "element-plus": "^2.4.3",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
@@ -30,8 +30,6 @@
     "vue-router": "4"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.53.3",
-    "@arco-plugins/vite-vue": "^1.4.5",
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
     "@types/node": "^20.10.0",

@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       colors: {
         /**主题背景色 */
-        primary: 'rgb(var(--primary-6))',
+        primary: 'var(--el-bg-color-page)',
       },
     },
   },

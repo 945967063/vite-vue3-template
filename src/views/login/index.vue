@@ -1,5 +1,5 @@
 <template>
-  <a-rate :default-value="2.5" allow-half />
+  <div>login</div>
 </template>
 
 <script setup lang="ts"></script>

@@ -1,0 +1,29 @@
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': $--color-primary
+    ),
+    'info': (
+      'base': $--color-info
+    ),
+    'warning': (
+      'base': $--color-warning
+    )
+  ),
+  $font-size: (
+    'base': $--font-size-base
+  ),
+  $dialog: (
+    'padding-primary': $--dialog-padding-primary,
+    'title-font-size': $--dialog-title-font-size,
+    'box-shadow': $--dialog-box-shadow,
+    'background-color': $background-Color-primary,
+    'border-radius': $--el-dialog-border-radius
+  ),
+  $table: (
+    'header-bg-color': $-table-header-bg-color
+  ),
+  $drawer: (
+    'padding-primary': '0px'
+  )
+);

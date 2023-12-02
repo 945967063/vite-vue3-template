@@ -1,0 +1,28 @@
+.dialog-center {
+  padding: 13px 24px;
+}
+.titleClass {
+  box-sizing: border-box;
+  padding: 8px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0dfdf;
+}
+.title {
+  font-size: 18px;
+  font-family: Microsoft YaHei-Regular, Microsoft YaHei;
+  font-weight: 400;
+  color: #4c4c4c;
+  line-height: 18px;
+  font-weight: bold;
+}
+.title-icon {
+  font-size: 24px;
+  color: #cfd9f4;
+  cursor: pointer;
+}
+.dialog-btn {
+  text-align: right;
+  margin-top: 20px;
+}

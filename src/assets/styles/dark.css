@@ -1,0 +1,38 @@
+@charset "UTF-8";
+@use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
+/* 暗黑模式适配 */
+html.dark {
+  /* 自定义深色背景颜色 */
+  /* element-plus */
+}
+
+html.dark .navbar,
+html.dark .tags-view,
+html.dark .contextmenu,
+html.dark .sidebar-container,
+html.dark .horizontal-header,
+html.dark .sidebar-logo-container,
+html.dark .horizontal-header .el-sub-menu__title,
+html.dark .horizontal-header .submenu-title-noDropdown {
+  background: var(--el-bg-color) !important;
+}
+
+html.dark #app {
+  background: #020409 !important;
+}
+
+html.dark .el-table__cell {
+  background: var(--el-bg-color);
+}
+
+html.dark .el-card {
+  --el-card-bg-color: var(--el-bg-color);
+}
+
+html.dark .el-table__header {
+  --el-table-header-bg-color: var(--el-bg-color);
+}
+
+html.dark .projectNames {
+  background-color: #141414;
+}

@@ -1,0 +1,47 @@
+/*element组件自定义样式*/
+//改变主题色变量
+// @use '~element-plus/theme-chalk/src/index';
+
+$--color-primary: #134973;
+$--color-info: #bebebe;
+$--color-warning: #e58a00;
+$--font-size-base: 14px;
+$--dialog-padding-primary: 0 !default;
+$--dialog-title-font-size: 13px;
+$--dialog-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+
+$--el-dialog-border-radius: 8px;
+$-table-header-bg-color: #f7f7f7;
+
+//background-color
+$background-Color-primary: #f4f7fd;
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': $--color-primary,
+    ),
+    'info': (
+      'base': $--color-info,
+    ),
+    'warning': (
+      'base': $--color-warning,
+    ),
+  ),
+  $font-size: (
+    'base': $--font-size-base,
+  ),
+  $dialog: (
+    'padding-primary': $--dialog-padding-primary,
+    'title-font-size': $--dialog-title-font-size,
+    'box-shadow': $--dialog-box-shadow,
+    'background-color': $background-Color-primary,
+    'border-radius': $--el-dialog-border-radius,
+  ),
+  $table: (
+    'header-bg-color': $-table-header-bg-color,
+  ),
+  $drawer: (
+    'padding-primary': '0px',
+  )
+);

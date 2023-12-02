@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import router from '@/router';
-import { Message } from '@arco-design/web-vue';
+// import { Message } from '@arco-design/web-vue';
 export default defineStore('login', {
   state: () => ({
     num: 0,
@@ -11,19 +11,18 @@ export default defineStore('login', {
   }),
   actions: {
     toggleTheme(dark: boolean) {
-      console.log(dark);
-
       if (dark) {
         this.theme = 'dark';
-        document.body.setAttribute('arco-theme', 'dark');
+        // html
+        document.documentElement.setAttribute('class', 'dark');
       } else {
         this.theme = 'light';
-        document.body.removeAttribute('arco-theme');
+        document.documentElement.setAttribute('class', '');
       }
     },
     /**退出登录 */
     logout() {
-      Message.success('登出成功');
+      // Message.success('登出成功');
       router.push('/');
     },
   },
