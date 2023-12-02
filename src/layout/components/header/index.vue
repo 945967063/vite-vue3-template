@@ -113,7 +113,7 @@
     display: flex;
     justify-content: space-between;
     height: 60px;
-    background-color: var(--color-bg-2);
+    background-color: var(--el-color-white);
     border-bottom: 1px solid var(--color-border);
   }
 
