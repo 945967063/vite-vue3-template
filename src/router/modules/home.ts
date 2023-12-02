@@ -6,14 +6,14 @@ const HomeRoutes: RouteRecordRaw = {
   redirect: '/home',
   meta: {
     icon: 'homeFilled',
-    title: '首页',
+    title: 'menu.home',
   },
   children: [
     {
       path: '/home',
       name: 'Home',
       meta: {
-        title: '欢迎',
+        title: 'menu.home',
       },
       component: () => import('@/views/home/index.vue'),
     },

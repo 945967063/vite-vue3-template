@@ -29,3 +29,4 @@ export function mountRouter(app: App) {
   app.use(router);
   CreateRouterGuards(router);
 }
+export default router;

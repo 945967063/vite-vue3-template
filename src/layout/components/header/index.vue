@@ -50,9 +50,16 @@
       </div>
 
       <div>
-        <a-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
-          <img alt="avatar" src="https://avatars.githubusercontent.com/u/89059293?v=4" />
-        </a-avatar>
+        <a-dropdown trigger="click">
+          <a-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
+            <img alt="avatar" src="https://avatars.githubusercontent.com/u/89059293?v=4" />
+          </a-avatar>
+          <template #content>
+            <a-doption>
+              <a-space @click="handleLogout">退出登录</a-space>
+            </a-doption>
+          </template>
+        </a-dropdown>
       </div>
     </div>
   </div>
@@ -95,6 +102,10 @@
     toggleTheme();
   };
   const toggleTheme = useToggle(isDark);
+
+  const handleLogout = () => {
+    login.logout();
+  };
 </script>
 
 <style scoped lang="scss">

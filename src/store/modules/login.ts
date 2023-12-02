@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import router from '@/router';
+import { Message } from '@arco-design/web-vue';
 export default defineStore('login', {
   state: () => ({
     num: 0,
@@ -18,6 +20,11 @@ export default defineStore('login', {
         this.theme = 'light';
         document.body.removeAttribute('arco-theme');
       }
+    },
+    /**退出登录 */
+    logout() {
+      Message.success('登出成功');
+      router.push('/');
     },
   },
   //数据持久化配置 这里是当前所有变量都持久化

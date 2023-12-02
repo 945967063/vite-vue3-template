@@ -12,13 +12,13 @@
       <template v-for="item in routers.asyncRouter" :key="item.path">
         <a-menu-item v-if="!item.meta?.rank" :key="item.path">
           <template #icon><icon-apps></icon-apps></template>
-          {{ item.meta?.title }}
+          {{ $t(item.meta?.title + '') }}
         </a-menu-item>
         <a-sub-menu v-else>
           <template #icon><icon-apps></icon-apps></template>
-          <template #title>{{ item.meta?.title }}</template>
+          <template #title>{{ $t(item.meta?.title + '') }}</template>
           <a-menu-item v-for="item1 in item.children" :key="item1.path">
-            {{ item1.meta?.title }}
+            {{ $t(item1.meta?.title + '') }}
           </a-menu-item>
         </a-sub-menu>
       </template>
