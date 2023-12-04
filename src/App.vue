@@ -17,7 +17,7 @@
 </script>
 
 <template>
-  <el-config-provider :locale="locale"><RouterView></RouterView></el-config-provider>
+  <el-config-provider :locale="locale" size="large"><RouterView></RouterView></el-config-provider>
 </template>
 
 <style>
