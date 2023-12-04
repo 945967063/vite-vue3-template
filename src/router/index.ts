@@ -3,6 +3,7 @@ import { App } from 'vue';
 import { CreateRouterGuards } from './guards';
 import AbleRouter from './modules/able';
 import HomeRoutes from './modules/home';
+import NestedRouter from './modules/nested';
 export const BaseRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -20,6 +21,8 @@ export const AsyncRoutes: RouteRecordRaw[] = [
   HomeRoutes,
   /**功能 */
   AbleRouter,
+  /**多级菜单 */
+  NestedRouter,
 ];
 const router = createRouter({
   history: createWebHistory(),

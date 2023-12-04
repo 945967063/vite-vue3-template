@@ -23,6 +23,14 @@ const messages = {
     //导出Excel
     exportExcel: 'Export Excel',
     download: 'Download',
+    hsmenus: 'MultiLevel Menu',
+    hsmenu1: 'Menu1',
+    hsmenu1_1: 'Menu1-1',
+    hsmenu1_2: 'Menu1-2',
+    hsmenu1_2_1: 'Menu1-2-1',
+    hsmenu1_2_2: 'Menu1-2-2',
+    hsmenu1_3: 'Menu1-3',
+    hsmenu2: 'Menu2',
   },
 };
 export default messages;

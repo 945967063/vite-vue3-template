@@ -7,6 +7,7 @@ const AbleRouter: RouteRecordRaw = {
     title: 'menu.features',
     icon: 'icon-gongneng',
     rank: 'able',
+    class: 'able',
   },
   children: [
     {
@@ -15,6 +16,7 @@ const AbleRouter: RouteRecordRaw = {
       component: () => import('@/views/able/excel/excel.vue'),
       meta: {
         title: 'menu.exportExcel',
+        class: 'excel',
       },
     },
     {
@@ -23,6 +25,7 @@ const AbleRouter: RouteRecordRaw = {
       component: () => import('@/views/able/download/download.vue'),
       meta: {
         title: 'menu.download',
+        class: 'download',
       },
     },
   ],

@@ -3,14 +3,30 @@
     <el-sub-menu v-if="item.meta?.rank" :index="item.path">
       <template #title>
         <i :class="['iconfont', item.meta?.icon]"></i>
-        <span :class="[login.isCollapse ? '' : 'ml-2']">{{ $t(item.meta?.title + '') }}</span>
+        <span :class="[login.isCollapse ? '' : 'ml-2']">
+          <TypeIt
+            :values="[$t(item.meta?.title + '')]"
+            :cursor="false"
+            :speed="50"
+            :className="item.meta?.class"
+          />
+          <!-- {{ $t(item.meta?.title + '') }} -->
+        </span>
       </template>
       <MenuTree :menu="item.children" :defaultActive="defaultActive" @clickItem="clickItemHandle" />
     </el-sub-menu>
     <el-menu-item v-else :index="item.path">
       <i :class="['iconfont', item.meta?.icon]"></i>
       <template #title>
-        <span :class="[login.isCollapse ? '' : 'ml-2']">{{ $t(item.meta?.title + '') }}</span>
+        <span :class="[login.isCollapse ? '' : 'ml-2']">
+          <TypeIt
+            :values="[$t(item.meta?.title + '')]"
+            :cursor="false"
+            :speed="50"
+            :className="item.meta?.class"
+          />
+          <!-- {{ $t(item.meta?.title + '') }} -->
+        </span>
       </template>
     </el-menu-item>
   </template>
@@ -18,6 +34,7 @@
 <script setup name="MenuTree" lang="ts">
   import useStore from '@/store';
   import { PropType } from 'vue';
+  import TypeIt from '@/components/ReTypeit';
   defineProps({
     menu: {
       type: Array as unknown as PropType<any[]>,

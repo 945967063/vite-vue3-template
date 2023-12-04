@@ -6,7 +6,7 @@
           <Header />
         </el-header>
         <el-container>
-          <div :class="[login.isCollapse ? 'collapse-ln' : 'expand-ln']">
+          <div>
             <Sider />
           </div>
           <div>
@@ -23,9 +23,7 @@
   import Header from './components/header/index.vue';
   import Sider from './components/sider/index.vue';
   import Content from './components/content/index.vue';
-  import useStore from '@/store';
   import useLocale from '@/hooks/locale';
-  const { login } = useStore();
   const { currentLocale } = useLocale();
   const locale = computed(() => {
     switch (currentLocale.value) {
@@ -45,11 +43,11 @@
   //菜单折叠动画
   .collapse-ln {
     width: 64px;
-    animation: collapse 0.5s;
+    animation: collapse 0.3s;
   }
   .expand-ln {
     width: 200px;
-    animation: expand 0.5s;
+    animation: expand 0.3s;
   }
 
   @keyframes collapse {

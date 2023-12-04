@@ -1,6 +1,7 @@
 <template>
   <div class="menu-demo">
     <el-menu
+      :class="[login.isCollapse ? 'collapse-ln' : 'expand-ln']"
       :default-active="active"
       :collapse="login.isCollapse"
       :collapse-transition="false"
@@ -55,5 +56,31 @@
   :deep(.el-menu) {
     height: 100%;
     border-right: none;
+  }
+
+  .collapse-ln {
+    width: 64px;
+    animation: collapse 0.5s;
+  }
+  .expand-ln {
+    width: 200px;
+    animation: expand 0.5s;
+  }
+
+  @keyframes collapse {
+    0% {
+      width: 200px;
+    }
+    100% {
+      width: 64px;
+    }
+  }
+  @keyframes expand {
+    0% {
+      width: 64px;
+    }
+    100% {
+      width: 200px;
+    }
   }
 </style>

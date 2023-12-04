@@ -100,7 +100,11 @@
     }
   };
   const changeLocaleCommand = (command: string | number | object) => {
+    login.isCollapse = true;
     changeLocale(command as string);
+    setTimeout(() => {
+      login.isCollapse = false;
+    }, 200);
   };
 </script>
 

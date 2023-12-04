@@ -7,6 +7,7 @@ const HomeRoutes: RouteRecordRaw = {
   meta: {
     icon: 'icon-shouye',
     title: 'menu.home',
+    class: 'home',
   },
   children: [
     {
@@ -14,6 +15,7 @@ const HomeRoutes: RouteRecordRaw = {
       name: 'Home',
       meta: {
         title: 'menu.home',
+        class: 'home',
       },
       component: () => import('@/views/home/index.vue'),
     },
