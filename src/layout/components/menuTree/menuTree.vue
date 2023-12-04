@@ -3,12 +3,12 @@
     <template v-for="item in menu" :key="item.path">
       <el-menu-item v-if="!item.meta?.rank" :index="item.path">
         <el-icon><icon-menu /></el-icon>
-        <template #title>{{ item.meta?.title + '' }}</template>
+        <template #title>{{ $t(item.meta?.title + '') }}</template>
       </el-menu-item>
       <el-sub-menu v-else :index="item.path">
         <template #title>
           <el-icon><location /></el-icon>
-          <span>{{ item.meta?.title + '' }}</span>
+          <span>{{ $t(item.meta?.title + '') }}</span>
         </template>
         <MenuTree
           :menu="item.children"

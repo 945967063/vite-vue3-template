@@ -13,20 +13,18 @@
     </div>
     <div class="right-side">
       <div>
-        <el-button class="nav-btn" type="primary" plain @click="setDropDownVisible">
-          <template #icon>
-            <icon-language />
-          </template>
-        </el-button>
-
-        <el-dropdown trigger="click" @select="changeLocale as any">
-          <div ref="triggerBtn" class="trigger-btn"></div>
+        <el-dropdown @command="changeLocaleCommand">
+          <el-button type="primary">中英文切换</el-button>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item v-for="item in locales" :key="item.value" :value="item.value">
-                <template #icon>
-                  <icon-check v-show="item.value === currentLocale" />
-                </template>
+              <el-dropdown-item
+                class="w-[100px]"
+                v-for="item in locales"
+                :key="item.value"
+                :command="item.value"
+                :value="item.value"
+                :icon="item.value === currentLocale ? 'Check' : ''"
+              >
                 {{ item.label }}
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -34,7 +32,7 @@
         </el-dropdown>
       </div>
       <div>
-        <el-button class="nav-btn" type="primary" plain @click="handleToggleTheme">
+        <el-button type="primary" @click="handleToggleTheme">
           <template #icon>
             <div v-if="theme === 'dark'">黑</div>
             <div v-else>白</div>
@@ -75,15 +73,6 @@
   const { changeLocale, currentLocale } = useLocale();
   const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
   const locales = [...LOCALE_OPTIONS];
-  const triggerBtn = ref();
-  const setDropDownVisible = () => {
-    const event = new MouseEvent('click', {
-      view: window,
-      bubbles: true,
-      cancelable: true,
-    });
-    triggerBtn.value.dispatchEvent(event);
-  };
   const isDark = useDark({
     valueDark: 'dark',
     valueLight: 'light',
@@ -105,6 +94,9 @@
     if (command === 'logout') {
       login.logout();
     }
+  };
+  const changeLocaleCommand = (command: string | number | object) => {
+    changeLocale(command as string);
   };
 </script>
 

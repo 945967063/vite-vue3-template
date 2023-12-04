@@ -7,12 +7,14 @@ export default function useLocale() {
     return i18.locale.value;
   });
   const changeLocale = (value: string) => {
+    console.log(value);
+
     if (i18.locale.value === value) {
       return;
     }
     i18.locale.value = value;
     localStorage.setItem('arco-locale', value);
-    // Message.success(i18.t('config.language'));
+    ElMessage.success(i18.t('config.language'));
   };
   return {
     currentLocale,
