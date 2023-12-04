@@ -14,7 +14,11 @@
     <div class="right-side">
       <div>
         <el-dropdown @command="changeLocaleCommand">
-          <el-button type="primary">中英文切换</el-button>
+          <el-button type="primary" circle>
+            <template #icon>
+              <span class="iconfont icon-zhongyingwenyingwen"></span>
+            </template>
+          </el-button>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item
@@ -32,10 +36,10 @@
         </el-dropdown>
       </div>
       <div>
-        <el-button type="primary" @click="handleToggleTheme">
+        <el-button type="primary" @click="handleToggleTheme" circle>
           <template #icon>
-            <div v-if="theme === 'dark'">黑</div>
-            <div v-else>白</div>
+            <span v-if="theme === 'dark'" class="iconfont icon-dark-full"></span>
+            <span v-else class="iconfont icon-light-full"></span>
           </template>
         </el-button>
       </div>

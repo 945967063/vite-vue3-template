@@ -1,8 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import '@/assets/styles/tailwind.css';
-import '@/assets/styles/dark.scss';
-import '@/assets/styles/global.scss';
+import '@/assets/styles/index.scss';
 import { mountRouter } from '@/router';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
