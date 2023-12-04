@@ -1,6 +1,6 @@
 import { BaseRoutes, PageNotFound, AsyncRoutes } from '@/router';
 import { RouteRecordRaw } from 'vue-router';
-interface IState {
+export interface IState {
   router: RouteRecordRaw[];
   asyncRouter: RouteRecordRaw[];
 }

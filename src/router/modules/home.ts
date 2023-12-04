@@ -5,7 +5,7 @@ const HomeRoutes: RouteRecordRaw = {
   component: () => import('@/layout/index.vue'),
   redirect: '/home',
   meta: {
-    icon: 'homeFilled',
+    icon: 'icon-shouye',
     title: 'menu.home',
   },
   children: [

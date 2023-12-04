@@ -22,6 +22,7 @@ const messages = {
     features: '功能',
     //导出Excel
     exportExcel: '导出Excel',
+    download: '下载',
   },
 };
 export default messages;

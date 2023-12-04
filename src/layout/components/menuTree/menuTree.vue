@@ -1,26 +1,22 @@
 <template>
-  <el-menu :default-active="defaultActive" router>
-    <template v-for="item in menu" :key="item.path">
-      <el-menu-item v-if="!item.meta?.rank" :index="item.path">
-        <el-icon><icon-menu /></el-icon>
-        <template #title>{{ $t(item.meta?.title + '') }}</template>
-      </el-menu-item>
-      <el-sub-menu v-else :index="item.path">
-        <template #title>
-          <el-icon><location /></el-icon>
-          <span>{{ $t(item.meta?.title + '') }}</span>
-        </template>
-        <MenuTree
-          :menu="item.children"
-          :defaultActive="defaultActive"
-          @clickItem="clickItemHandle"
-        />
-      </el-sub-menu>
-    </template>
-  </el-menu>
+  <template v-for="item in menu" :key="item.path">
+    <el-sub-menu v-if="item.meta?.rank" :index="item.path">
+      <template #title>
+        <i :class="['iconfont', item.meta?.icon]"></i>
+        <span :class="[login.isCollapse ? '' : 'ml-2']">{{ $t(item.meta?.title + '') }}</span>
+      </template>
+      <MenuTree :menu="item.children" :defaultActive="defaultActive" @clickItem="clickItemHandle" />
+    </el-sub-menu>
+    <el-menu-item v-else :index="item.path">
+      <i :class="['iconfont', item.meta?.icon]"></i>
+      <template #title>
+        <span :class="[login.isCollapse ? '' : 'ml-2']">{{ $t(item.meta?.title + '') }}</span>
+      </template>
+    </el-menu-item>
+  </template>
 </template>
-<script setup lang="ts">
-  import { Menu as IconMenu, Location } from '@element-plus/icons-vue';
+<script setup name="MenuTree" lang="ts">
+  import useStore from '@/store';
   import { PropType } from 'vue';
   defineProps({
     menu: {
@@ -34,7 +30,7 @@
       default: '',
     },
   });
-
+  const { login } = useStore();
   const emit = defineEmits(['clickItem']);
 
   // 点击当前菜单项
