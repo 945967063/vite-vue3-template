@@ -23,6 +23,7 @@ export default defineStore('login', {
     /**退出登录 */
     logout() {
       // Message.success('登出成功');
+      localStorage.removeItem('vue3-admin-token');
       router.push('/');
     },
   },

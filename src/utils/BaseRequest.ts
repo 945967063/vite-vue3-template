@@ -57,27 +57,8 @@ export default class RequestHelper {
       function (response: any) {
         // 对响应数据做点什么
         console.log('response', response);
-        if (response) {
-          switch (response.status) {
-            case 200:
-              const accessToken = response.headers['access-token'];
-              const xAccessToken = response.headers['x-access-token'];
 
-              if (accessToken && xAccessToken) {
-                // const tokens = {
-                //   token: accessToken,
-                //   refreshToken: xAccessToken,
-                // };
-              }
-
-              return response.headers['content-type'] === 'application/octet-stream'
-                ? response.data
-                : response.data.data;
-
-            default:
-              return response;
-          }
-        }
+        return response.data;
       },
 
       function (error: any) {
