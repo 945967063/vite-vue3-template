@@ -13,37 +13,6 @@
     </div>
     <div class="right-side">
       <div>
-        <el-dropdown @command="changeLocaleCommand">
-          <el-button type="primary" circle>
-            <template #icon>
-              <span class="iconfont icon-zhongyingwenyingwen"></span>
-            </template>
-          </el-button>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item
-                class="w-[100px]"
-                v-for="item in locales"
-                :key="item.value"
-                :command="item.value"
-                :value="item.value"
-                :icon="item.value === currentLocale ? 'Check' : ''"
-              >
-                {{ item.label }}
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
-      <div>
-        <el-button type="primary" @click="handleToggleTheme" circle>
-          <template #icon>
-            <span v-if="theme === 'dark'" class="iconfont icon-dark-full"></span>
-            <span v-else class="iconfont icon-light-full"></span>
-          </template>
-        </el-button>
-      </div>
-      <div>
         <el-button
           type="primary"
           :icon="isFullscreen ? 'FullScreen' : 'FullScreen'"
@@ -51,7 +20,7 @@
           @click="toggleFullScreen"
         />
       </div>
-
+      <LanguageAndDark />
       <div>
         <el-dropdown @command="handleCommand">
           <el-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
@@ -69,42 +38,15 @@
 </template>
 
 <script lang="ts" setup>
-  import { LOCALE_OPTIONS } from '@/i18n';
-  import useLocale from '@/hooks/locale';
-  import { useDark, useToggle, useFullscreen } from '@vueuse/core';
+  import { useFullscreen } from '@vueuse/core';
   import useStore from '@/store';
   const { login } = useStore();
-  const { changeLocale, currentLocale } = useLocale();
   const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
-  const locales = [...LOCALE_OPTIONS];
-  const isDark = useDark({
-    valueDark: 'dark',
-    valueLight: 'light',
-    onChanged(dark: boolean) {
-      // overridden default behavior
-      login.toggleTheme(dark);
-    },
-  });
-  const theme = computed(() => {
-    return login.theme;
-  });
-
-  const handleToggleTheme = () => {
-    toggleTheme();
-  };
-  const toggleTheme = useToggle(isDark);
 
   const handleCommand = (command: string | number | object) => {
     if (command === 'logout') {
       login.logout();
     }
-  };
-  const changeLocaleCommand = (command: string | number | object) => {
-    login.isCollapse = true;
-    changeLocale(command as string);
-    setTimeout(() => {
-      login.isCollapse = false;
-    }, 200);
   };
 </script>
 

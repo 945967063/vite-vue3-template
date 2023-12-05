@@ -32,5 +32,14 @@ const messages = {
     hsmenu1_3: '菜单1-3',
     hsmenu2: '菜单2',
   },
+  login: {
+    login: '登录',
+    //请输入登录密码
+    loginPassword: '请输入登录密码',
+    //请输入登录账号
+    loginAccount: '请输入登录账号',
+    //密码校验
+    loginPasswordCheck: '密码格式应为8-18位数字、字母、符号的任意两种组合',
+  },
 };
 export default messages;
