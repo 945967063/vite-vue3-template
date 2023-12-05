@@ -13,7 +13,7 @@ export default function useLocale() {
       return;
     }
     i18.locale.value = value;
-    localStorage.setItem('arco-locale', value);
+    localStorage.setItem('vue3-admin-locale', value);
     ElMessage.success(i18.t('config.language'));
   };
   return {
