@@ -9,9 +9,9 @@
           <div>
             <Sider />
           </div>
-          <div>
+          <el-main>
             <Content />
-          </div>
+          </el-main>
         </el-container>
       </el-container>
     </el-config-provider>
