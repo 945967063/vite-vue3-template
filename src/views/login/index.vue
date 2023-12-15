@@ -58,12 +58,14 @@
   import { loginRules } from './utils/rule';
   import { login } from '@/api/login';
   import { loadSlim } from 'tsparticles-slim';
+  import useStore from '@/store';
   interface RuleForm {
     useName: string;
     passWord: string;
   }
   const loading = ref(false);
   const router = useRouter();
+  const { routers } = useStore();
 
   const ruleFormRef = ref<FormInstance>();
   const ruleForm = reactive<RuleForm>({
@@ -82,7 +84,7 @@
             passWord: ruleForm.passWord,
           },
         })
-          .then((res) => {
+          .then(async (res) => {
             if (res.code === 201) {
               localStorage.setItem(
                 'vue3-admin-token',
@@ -93,6 +95,7 @@
               );
               //存用户信息
               localStorage.setItem('vue3-admin-userInfo', JSON.stringify(res.data.userInfo));
+              await routers.getAsyncRouter();
               router.push('/home');
               ElMessage.success('登录成功');
             }
@@ -105,6 +108,10 @@
       }
     });
   };
+
+  onMounted(() => {
+    routers.asyncRouter = [];
+  });
 
   // <!--引入粒子特效的相关配置-->
   const options = {

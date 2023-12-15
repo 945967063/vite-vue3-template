@@ -29,6 +29,10 @@ export default class RequestHelper {
     // 添加请求拦截器
     axios.interceptors.request.use(
       async function (config) {
+        const tokens = JSON.parse(localStorage.getItem('vue3-admin-token') || '{}');
+        if (tokens) {
+          config.headers!['Authorization'] = `Bearer ${tokens.accessToken}`;
+        }
         // if (tokens) {
         //   // 将 token 添加到请求报文头中
         //   config.headers!['Authorization'] = `Bearer ${tokens.token}`;
@@ -66,7 +70,7 @@ export default class RequestHelper {
         // 对响应错误做点什么
         const response = error && error.response ? error.response : null;
         if (response && response.status && response.status === 401) {
-          return Promise.reject(error.response);
+          return ElMessage.error(response.data.data);
         } else {
           if (response && response.data && [403].includes(response.status)) {
             return Promise.reject(error.response.data);

@@ -8,6 +8,7 @@ const SystemRouter: RouteRecordRaw = {
     icon: 'icon-gongneng',
     rank: 'system',
     class: 'system',
+    btnPermission: ['user_list'],
   },
   children: [
     {

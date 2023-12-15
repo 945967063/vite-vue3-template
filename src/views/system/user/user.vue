@@ -72,8 +72,8 @@
         email: params.email,
       },
     });
-    tableData.value = res.data.users;
-    total.value = res.data.totalCount;
+    tableData.value = res.data?.users;
+    total.value = res.data?.totalCount;
   };
   //分页
   const pageChange = (val: { currentPage: number; pageSize: number }) => {
