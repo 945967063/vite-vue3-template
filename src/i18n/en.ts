@@ -31,6 +31,8 @@ const messages = {
     hsmenu1_2_2: 'Menu1-2-2',
     hsmenu1_3: 'Menu1-3',
     hsmenu2: 'Menu2',
+    system: 'System Manage',
+    hsUser: 'User Manage',
   },
   login: {
     login: 'Login',

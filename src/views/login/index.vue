@@ -39,6 +39,12 @@
           {{ $t('login.login') }}
         </el-button>
       </el-form-item>
+      <el-form-item>
+        <div class="w-full flex justify-between">
+          <el-button link>忘记密码 ?</el-button>
+          <el-button link @click="router.push('/register')">注册</el-button>
+        </div>
+      </el-form-item>
     </el-form>
   </div>
   <div class="absolute right-2 top-2 flex">
@@ -52,7 +58,6 @@
   import { loginRules } from './utils/rule';
   import { login } from '@/api/login';
   import { loadSlim } from 'tsparticles-slim';
-  import imageBg from '@/assets/images/bg.jpg';
   interface RuleForm {
     useName: string;
     passWord: string;
@@ -73,17 +78,23 @@
         loading.value = true;
         await login({
           bodyParams: {
-            useName: ruleForm.useName,
+            userName: ruleForm.useName,
             passWord: ruleForm.passWord,
           },
         })
           .then((res) => {
-            if (res.status === 200) {
-              localStorage.setItem('vue3-admin-token', res.data.token);
+            if (res.code === 201) {
+              localStorage.setItem(
+                'vue3-admin-token',
+                JSON.stringify({
+                  accessToken: res.data.accessToken,
+                  refreshToken: res.data.refreshToken,
+                })
+              );
+              //存用户信息
+              localStorage.setItem('vue3-admin-userInfo', JSON.stringify(res.data.userInfo));
               router.push('/home');
-              ElMessage.success(res.msg);
-            } else {
-              ElMessage.error(res.msg);
+              ElMessage.success('登录成功');
             }
           })
           .finally(() => {
@@ -101,7 +112,7 @@
       color: {
         value: '', //粒子颜色
       },
-      image: `url(${imageBg})`,
+      // image: `url(${imageBg})`,
       position: '50% 50%',
       repeat: 'no-repeat',
       size: 'cover',
@@ -138,7 +149,7 @@
     },
     particles: {
       color: {
-        value: '#f7f035',
+        value: '#004066',
       },
       links: {
         color: '#f7f035', //'#dedede'。线条颜色。

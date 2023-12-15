@@ -31,6 +31,8 @@ const messages = {
     hsmenu1_2_2: '菜单1-2-2',
     hsmenu1_3: '菜单1-3',
     hsmenu2: '菜单2',
+    system: '系统管理',
+    hsUser: '用户管理',
   },
   login: {
     login: '登录',

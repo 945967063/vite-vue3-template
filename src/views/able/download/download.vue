@@ -12,9 +12,38 @@
 
       <el-button @click="down">根据后台接口文件流下载</el-button>
     </div>
+    <el-card class="mt-2">
+      <div class="flex w-full">
+        <div id="seadragon-viewer"></div>
+
+        <div class="colorClass">
+          <div class="slider-demo-block">
+            <span class="demonstration">对比度</span>
+            <el-slider v-model="contrast" :min="0" :max="800" @change="changeContrast" />
+          </div>
+          <div class="slider-demo-block">
+            <span class="demonstration">亮度</span>
+            <el-slider v-model="brightness" :min="0" :max="1500" @change="changeBrightness" />
+          </div>
+          <div class="slider-demo-block">
+            <span class="demonstration">深褐色</span>
+            <el-slider v-model="sepia" :min="0" :max="100" @change="changeSepia" />
+          </div>
+          <div class="slider-demo-block">
+            <span class="demonstration">旋转</span>
+            <el-slider v-model="rotate" :min="0" :max="360" @change="changeRotate" />
+          </div>
+
+          <div class="slider-demo-block">
+            <el-button type="primary" @click="resetClick">重置</el-button>
+          </div>
+        </div>
+      </div>
+    </el-card>
   </el-card>
 </template>
 <script setup lang="ts">
+  import OpenSeadragon from 'openseadragon';
   import axios from 'axios';
 
   const downloadByOnlineUrl = (url: string) => {
@@ -80,5 +109,74 @@
       }
     );
   }
+  const contrast = ref(100);
+  const changeContrast = (val: any) => {
+    document.documentElement.style.setProperty('--image-contrast', val + '%');
+  };
+  const brightness = ref(100);
+  const changeBrightness = (val: any) => {
+    document.documentElement.style.setProperty('--image-brightness', val + '%');
+  };
+  const sepia = ref(0);
+  const changeSepia = (val: any) => {
+    document.documentElement.style.setProperty('--image-sepia', val + '%');
+  };
+
+  const rotate = ref(0);
+  const changeRotate = (val: any) => {
+    document.documentElement.style.setProperty('--image-hue-rotate', val + 'deg');
+  };
+
+  const resetClick = () => {
+    contrast.value = 100;
+    brightness.value = 100;
+    sepia.value = 0;
+    rotate.value = 0;
+    document.documentElement.style.setProperty('--image-contrast', '100%');
+    document.documentElement.style.setProperty('--image-brightness', '100%');
+    document.documentElement.style.setProperty('--image-sepia', '0%');
+    document.documentElement.style.setProperty('--image-hue-rotate', '0deg');
+  };
+  onMounted(() => {
+    let duomo = {
+      Image: {
+        xmlns: 'http://schemas.microsoft.com/deepzoom/2008',
+        Url: '//openseadragon.github.io/example-images/duomo/duomo_files/',
+        Format: 'jpg',
+        Overlap: '2',
+        TileSize: '256',
+        Size: {
+          Width: '13920',
+          Height: '10200',
+        },
+      },
+    };
+
+    OpenSeadragon({
+      id: 'seadragon-viewer',
+      prefixUrl: '//openseadragon.github.io/openseadragon/images/',
+      tileSources: duomo,
+    });
+  });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  #seadragon-viewer {
+    width: 1300px;
+    height: 900px;
+    filter: contrast(var(--image-contrast)) brightness(var(--image-brightness))
+      sepia(var(--image-sepia)) hue-rotate(var(--image-hue-rotate));
+  }
+  .colorClass {
+    width: 400px;
+  }
+  .slider-demo-block {
+    align-items: center;
+    & > span {
+      width: 100px;
+    }
+  }
+  .slider-demo-block .el-slider {
+    margin-top: 0;
+    margin-left: 12px;
+  }
+</style>

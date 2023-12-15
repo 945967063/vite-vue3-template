@@ -4,11 +4,17 @@ import { CreateRouterGuards } from './guards';
 import AbleRouter from './modules/able';
 import HomeRoutes from './modules/home';
 import NestedRouter from './modules/nested';
+import SystemRouter from './modules/system';
 export const BaseRoutes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/login/register.vue'),
   },
 ];
 export const PageNotFound: RouteRecordRaw = {
@@ -23,6 +29,8 @@ export const AsyncRoutes: RouteRecordRaw[] = [
   AbleRouter,
   /**多级菜单 */
   NestedRouter,
+  /**系统管理 */
+  SystemRouter,
 ];
 const router = createRouter({
   history: createWebHistory(),

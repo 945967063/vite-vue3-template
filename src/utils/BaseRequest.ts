@@ -21,7 +21,7 @@ export default class RequestHelper {
 
     const remoteUrl: string = import.meta.env.VITE_API as string;
     axios.defaults.baseURL = remoteUrl;
-    axios.defaults.timeout = 10000;
+    axios.defaults.timeout = 50000;
   }
 
   static initInterceptors(): void {
@@ -72,7 +72,8 @@ export default class RequestHelper {
             return Promise.reject(error.response.data);
           }
           if (response && response.data && [500, 400].includes(response.status)) {
-            return Promise.reject(error.response.data);
+            return ElMessage.error(response.data.data);
+            // return Promise.reject(error.response.data);
           }
         }
         return Promise.reject(error.response);
