@@ -164,7 +164,7 @@
         })
           .then((res) => {
             console.log(res);
-            if (res.code === 200) {
+            if (res.code === 201) {
               ElMessage.success('注册成功');
               router.push('/');
             }
