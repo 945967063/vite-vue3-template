@@ -15,13 +15,7 @@
   $font-size: (
     'base': $--font-size-base,
   ),
-  $dialog: (
-    'padding-primary': $--dialog-padding-primary,
-    'title-font-size': $--dialog-title-font-size,
-    'box-shadow': $--dialog-box-shadow,
-    'background-color': $background-Color-primary,
-    'border-radius': $--el-dialog-border-radius,
-  ),
+
   $drawer: (
     'padding-primary': '0px',
   )

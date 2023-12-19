@@ -3,7 +3,7 @@ import NProgress from '@/utils/progress';
 import useStore from '@/store';
 
 // 白名单(不需要登录检测)
-const whiteList = ['/', '/register'];
+const whiteList = ['/'];
 
 export function CreateRouterGuards(router: Router) {
   router.beforeEach(async (to) => {

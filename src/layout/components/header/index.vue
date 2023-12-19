@@ -28,26 +28,84 @@
           </el-avatar>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+              <el-dropdown-item command="pim">{{ $t('login.basicInformation') }}</el-dropdown-item>
+            </el-dropdown-menu>
+            <el-dropdown-menu>
+              <el-dropdown-item command="logout">{{ $t('login.logout') }}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </div>
     </div>
   </div>
+  <el-dialog v-model="dialogVisible" title="基本信息" width="30%">
+    <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-position="top">
+      <el-form-item label="用户昵称" prop="nickName">
+        <el-input v-model="ruleForm.nickName" class="w-full" placeholder="请输入用户昵称" />
+      </el-form-item>
+      <el-form-item label="用户角色">
+        <el-input v-model="ruleForm.isAdmin" class="w-full" disabled />
+      </el-form-item>
+      <el-form-item label="邮箱地址">
+        <el-input v-model="ruleForm.email" class="w-full" disabled />
+      </el-form-item>
+
+      <!-- <div class="flex justify-end">
+        <el-button class="w-[148px]" type="primary" @click="submitForm(ruleFormRef)">
+          保存
+        </el-button>
+      </div> -->
+    </el-form>
+  </el-dialog>
 </template>
 
 <script lang="ts" setup>
   import { useFullscreen } from '@vueuse/core';
   import useStore from '@/store';
+  import { FormInstance } from 'element-plus';
   const { login } = useStore();
   const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
-
+  const dialogVisible = ref(false);
   const handleCommand = (command: string | number | object) => {
     if (command === 'logout') {
       login.logout();
     }
+    if (command === 'pim') {
+      const userInfo = localStorage.getItem('vue3-admin-userInfo');
+      if (userInfo) {
+        const { nickName, isAdmin, email } = JSON.parse(userInfo);
+        ruleForm.nickName = nickName;
+        ruleForm.isAdmin = isAdmin ? '管理员' : '普通用户';
+        ruleForm.email = email;
+      }
+      dialogVisible.value = true;
+    }
   };
+  const ruleFormRef = ref<FormInstance>();
+  const ruleForm = reactive({
+    nickName: '',
+    isAdmin: '',
+    email: '',
+  });
+  const rules = reactive({
+    nickName: [
+      {
+        required: true,
+        message: '请输入昵称',
+        trigger: 'blur',
+      },
+    ],
+  });
+
+  // const submitForm = async (formEl: FormInstance | undefined) => {
+  //   if (!formEl) return;
+  //   await formEl.validate(async (valid, fields) => {
+  //     if (valid) {
+  //     } else {
+  //       console.log('error submit!', fields);
+  //     }
+  //   });
+  // };
 </script>
 
 <style scoped lang="scss">

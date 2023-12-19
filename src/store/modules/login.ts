@@ -8,6 +8,8 @@ export default defineStore('login', {
     isCollapse: false,
     /**暗黑切换 */
     theme: 'light',
+    /**当前是登录 1、注册 2、找回密码 3*/
+    current: 1,
   }),
   actions: {
     toggleTheme(dark: boolean) {

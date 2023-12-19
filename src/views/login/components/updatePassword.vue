@@ -9,61 +9,18 @@
       status-icon
     >
       <el-form-item
-        label="用户名"
+        label="账号"
         prop="userName"
         :rules="[
           {
             required: true,
-            message: '请输入用户名',
+            message: '请输入账号',
             trigger: 'blur',
           },
         ]"
       >
-        <el-input v-model.trim="ruleForm.userName" clearable placeholder="请输入用户名" />
+        <el-input v-model.trim="ruleForm.userName" clearable placeholder="请输入账号" />
       </el-form-item>
-
-      <el-form-item
-        label="昵称"
-        prop="nickName"
-        :rules="[
-          {
-            required: true,
-            message: '请输入昵称',
-            trigger: 'blur',
-          },
-        ]"
-      >
-        <el-input v-model.trim="ruleForm.nickName" clearable placeholder="请输入昵称" />
-      </el-form-item>
-      <el-form-item
-        label="密码"
-        prop="passWord"
-        :rules="[
-          {
-            required: true,
-            message: '请输入密码',
-            trigger: 'blur',
-          },
-        ]"
-      >
-        <el-input
-          v-model.trim="ruleForm.passWord"
-          type="password"
-          show-password
-          clearable
-          placeholder="请输入密码"
-        />
-      </el-form-item>
-      <el-form-item label="确认密码" prop="passwords" :rules="repeatPasswordRule">
-        <el-input
-          v-model.trim="ruleForm.passwords"
-          type="password"
-          show-password
-          clearable
-          placeholder="请再次输入密码"
-        />
-      </el-form-item>
-
       <el-form-item
         label="邮箱"
         prop="email"
@@ -106,6 +63,35 @@
         </div>
       </el-form-item>
 
+      <el-form-item
+        label="密码"
+        prop="passWord"
+        :rules="[
+          {
+            required: true,
+            message: '请输入新密码',
+            trigger: 'blur',
+          },
+        ]"
+      >
+        <el-input
+          v-model.trim="ruleForm.passWord"
+          type="password"
+          show-password
+          clearable
+          placeholder="请输入新密码"
+        />
+      </el-form-item>
+      <el-form-item label="确认密码" prop="passwords" :rules="repeatPasswordRule">
+        <el-input
+          v-model.trim="ruleForm.passwords"
+          type="password"
+          show-password
+          clearable
+          placeholder="请再次输入新密码"
+        />
+      </el-form-item>
+
       <el-form-item class="mt-10">
         <el-button
           type="primary"
@@ -113,8 +99,11 @@
           :loading="loading"
           @click="submitForm(ruleFormRef)"
         >
-          注册
+          确认
         </el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="info" class="w-full" @click="login.current = 1">返回</el-button>
       </el-form-item>
     </el-form>
     <div class="absolute right-2 top-2 flex">
@@ -123,28 +112,26 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { reactive, ref } from 'vue';
   import type { FormInstance } from 'element-plus';
-  import { loginRules } from './utils/rule';
-  import { register, getCodeApi } from '@/api/login';
+  import { loginRules } from '../utils/rule';
+  import { updatePassword, updatePasswordCodeApi } from '@/api/login';
+  import useStore from '@/store';
   interface RuleForm {
-    userName: string;
     passWord: string;
     passwords: string;
-    nickName: string;
     email: string;
     captcha: string;
+    userName: string;
   }
+  const { login } = useStore();
   const loading = ref(false);
-  const router = useRouter();
   const ruleFormRef = ref<FormInstance>();
   const ruleForm = reactive<RuleForm>({
-    userName: '',
     passWord: '',
     passwords: '',
-    nickName: '',
     email: '',
     captcha: '',
+    userName: '',
   });
   const disabledCode = ref(false);
   const codeTime = ref(60);
@@ -153,20 +140,19 @@
     await formEl.validate(async (valid, fields) => {
       if (valid) {
         loading.value = true;
-        await register({
+        await updatePassword({
           bodyParams: {
-            userName: ruleForm.userName,
-            passWord: ruleForm.passWord,
-            nickName: ruleForm.nickName,
+            password: ruleForm.passWord,
             email: ruleForm.email,
             captcha: ruleForm.captcha,
+            userName: ruleForm.userName,
           },
         })
           .then((res) => {
             console.log(res);
             if (res.code === 201) {
-              ElMessage.success('注册成功');
-              router.push('/');
+              ElMessage.success('密码修改成功');
+              login.current = 1;
             }
           })
           .finally(() => {
@@ -196,11 +182,16 @@
     try {
       disabledCode.value = true;
 
-      await getCodeApi({
-        params: {
-          address: ruleForm.email,
-        },
-      });
+      try {
+        await updatePasswordCodeApi({
+          params: {
+            address: ruleForm.email,
+          },
+        });
+      } catch (error) {
+        disabledCode.value = false;
+        ElMessage.error('验证码获取失败');
+      }
 
       await new Promise((resolve) => {
         const timer = setInterval(() => {

@@ -1,114 +1,31 @@
 <template>
   <vue-particles id="tsparticles" :particlesInit="particlesInit" :options="options" />
-  <div class="w-full h-full flex-c relative">
-    <el-form class="w-[300px]" ref="ruleFormRef" :model="ruleForm" :rules="loginRules" status-icon>
-      <el-form-item
-        prop="useName"
-        :rules="[
-          {
-            required: true,
-            message: $t('login.loginAccount'),
-            trigger: 'blur',
-          },
-        ]"
-      >
-        <el-input
-          v-model.trim="ruleForm.useName"
-          clearable
-          prefix-icon="UserFilled"
-          :placeholder="$t('login.loginAccount')"
-        />
-      </el-form-item>
-      <el-form-item class="mt-5" prop="passWord">
-        <el-input
-          v-model.trim="ruleForm.passWord"
-          type="password"
-          show-password
-          clearable
-          prefix-icon="lock"
-          :placeholder="$t('login.loginPassword')"
-        />
-      </el-form-item>
-      <el-form-item class="mt-10">
-        <el-button
-          type="primary"
-          class="w-full"
-          :loading="loading"
-          @click="submitForm(ruleFormRef)"
-        >
-          {{ $t('login.login') }}
-        </el-button>
-      </el-form-item>
-      <el-form-item>
-        <div class="w-full flex justify-between">
-          <el-button link>忘记密码 ?</el-button>
-          <el-button link @click="router.push('/register')">注册</el-button>
-        </div>
-      </el-form-item>
-    </el-form>
-  </div>
+
+  <!-- 登录 start -->
+  <Login v-if="login.current === 1" />
+  <!-- 登录 end -->
+
+  <!-- 注册 start -->
+  <Register v-if="login.current === 2" />
+  <!-- 注册 end -->
+
+  <!-- 忘记密码 start -->
+  <UpdatePassword v-if="login.current === 3" />
+  <!-- 忘记密码 end -->
+
   <div class="absolute right-2 top-2 flex">
     <LanguageAndDark />
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { reactive, ref } from 'vue';
-  import type { FormInstance } from 'element-plus';
-  import { loginRules } from './utils/rule';
-  import { login } from '@/api/login';
   import { loadSlim } from 'tsparticles-slim';
   import useStore from '@/store';
-  interface RuleForm {
-    useName: string;
-    passWord: string;
-  }
-  const loading = ref(false);
-  const router = useRouter();
-  const { routers } = useStore();
+  import Login from './components/login.vue';
+  import Register from './components/register.vue';
+  import UpdatePassword from './components/updatePassword.vue';
 
-  const ruleFormRef = ref<FormInstance>();
-  const ruleForm = reactive<RuleForm>({
-    useName: 'linian',
-    passWord: 'sqray123456.',
-  });
-
-  const submitForm = async (formEl: FormInstance | undefined) => {
-    if (!formEl) return;
-    await formEl.validate(async (valid, fields) => {
-      if (valid) {
-        loading.value = true;
-        await login({
-          bodyParams: {
-            userName: ruleForm.useName,
-            passWord: ruleForm.passWord,
-          },
-        })
-          .then(async (res) => {
-            if (res.code === 201) {
-              localStorage.setItem(
-                'vue3-admin-token',
-                JSON.stringify({
-                  accessToken: res.data.accessToken,
-                  refreshToken: res.data.refreshToken,
-                })
-              );
-              //存用户信息
-              localStorage.setItem('vue3-admin-userInfo', JSON.stringify(res.data.userInfo));
-              await routers.getAsyncRouter();
-              router.push('/home');
-              ElMessage.success('登录成功');
-            }
-          })
-          .finally(() => {
-            loading.value = false;
-          });
-      } else {
-        console.log('error submit!', fields);
-      }
-    });
-  };
-
+  const { routers, login } = useStore();
   onMounted(() => {
     routers.asyncRouter = [];
   });

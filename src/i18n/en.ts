@@ -43,6 +43,14 @@ const messages = {
     //密码校验
     loginPasswordCheck:
       'The password format should be any two combinations of 8-18 digits, letters, and symbols',
+    //忘记密码 ?
+    forgetPassword: 'Forget Password ?',
+    //注册
+    register: 'Register',
+    //登录成功
+    loginSuccess: 'Login Success',
+    logout: 'Logout',
+    basicInformation: 'Basic Information',
   },
 };
 export default messages;

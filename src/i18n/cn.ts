@@ -42,6 +42,14 @@ const messages = {
     loginAccount: '请输入登录账号',
     //密码校验
     loginPasswordCheck: '密码格式应为8-18位数字、字母、符号的任意两种组合',
+    //忘记密码 ?
+    forgetPassword: '忘记密码 ?',
+    //注册
+    register: '注册',
+    //登录成功
+    loginSuccess: '登录成功',
+    logout: '退出登录',
+    basicInformation: '基本信息',
   },
 };
 export default messages;

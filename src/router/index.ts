@@ -11,11 +11,6 @@ export const BaseRoutes: Array<RouteRecordRaw> = [
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
   },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import('@/views/login/register.vue'),
-  },
 ];
 export const PageNotFound: RouteRecordRaw = {
   path: '/:path(.*)',
