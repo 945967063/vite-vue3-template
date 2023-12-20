@@ -1,90 +1,90 @@
 <template>
-  <div class="w-full h-full">
-    <span>
-      <label for="file">选择要上传的图片</label>
-      <input type="file" id="fileInput" accept="image/*" />
-    </span>
-    <!-- 选择JSON文件 -->
-    <span v-show="isUpload">
-      <label for="file">选择要上传的JSON文件</label>
-      <input type="file" id="fileInputJson" accept="application/json" />
-    </span>
-    <el-button type="primary" @click="saveCanvas">保存图片</el-button>
-    <!-- 用于上传图片 -->
-    <div style="position: relative">
-      <canvas id="myCanvas" style="position: absolute; top: 0; left: 0"></canvas>
-    </div>
+  <div class="w-full home" id="home">
+    <div class="w-full h-full" id="container"></div>
   </div>
 </template>
-<script setup lang="ts">
-  const ctx = ref();
-  const image = ref();
-  const canvas = ref();
-  const jsonDetails = ref();
-  //是否上传了图片
-  const isUpload = ref(false);
-  const renderPoints = () => {
-    const list = jsonDetails.value.GroupModel.Labels;
-    ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height); // 清空画布
-    ctx.value.drawImage(image.value, 0, 0); // 重新绘制图片
 
-    for (let i = 0; i < list.length; i++) {
-      ctx.value.strokeStyle = list[i].LineColor; // 设置线的颜色
-      // ctx.value.lineWidth = list[i].lineWidth; // 设置线宽度
-      ctx.value.lineWidth = 2;
-      ctx.value.beginPath();
-      ctx.value.moveTo(list[i].Coordinates[0].X, list[i].Coordinates[0].Y); // 将线条起点移动到第一个点
+<script lang="ts" setup>
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+  import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
-      for (let j = 1; j < list[i].Coordinates.length; j++) {
-        ctx.value.lineTo(list[i].Coordinates[j].X, list[i].Coordinates[j].Y); // 连接每个点
-      }
-
-      ctx.value.stroke(); // 绘制线条
-      ctx.value.closePath();
-    }
-  };
-  // canvas 保存为图片
-  const saveCanvas = () => {
-    let image = canvas.value.toDataURL('image/png');
-    let a = document.createElement('a');
-    let event = new MouseEvent('click');
-    a.download = '图片';
-    a.href = image;
-    a.dispatchEvent(event);
-  };
   onMounted(() => {
-    canvas.value = document.getElementById('myCanvas') as HTMLCanvasElement;
-    ctx.value = canvas.value.getContext('2d');
-    image.value = new Image();
-    // 上传图片并加载到 canvas
-    document.getElementById('fileInput')?.addEventListener('change', function (e: any) {
-      let file = e.target?.files[0];
-      let reader = new FileReader();
-      reader.onload = function (event) {
-        image.value.onload = function () {
-          canvas.value.width = image.value.width;
-          canvas.value.height = image.value.height;
-          ctx.value?.drawImage(image.value, 0, 0); // 在 canvas 上绘制图片
-        };
-        image.value.src = event.target?.result as string;
-        isUpload.value = true;
-      };
+    let mixer: THREE.AnimationMixer;
 
-      reader.readAsDataURL(file);
+    const clock = new THREE.Clock();
+    const containerHome = document.getElementById('home');
+    const container = document.getElementById('container');
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    console.log(container);
+    //获取renderer宽高
+    if (!containerHome) return;
+
+    renderer.setSize(containerHome.offsetWidth - 140, containerHome?.offsetHeight);
+    container?.appendChild(renderer.domElement);
+
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xbfe3dd);
+    scene.environment = pmremGenerator.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+
+    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 100);
+    camera.position.set(5, 2, 8);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 0.5, 0);
+    controls.update();
+    controls.enablePan = false;
+    controls.enableDamping = true;
+
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('/gltf/');
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+    loader.load(
+      '/LittlestTokyo.glb',
+      (gltf) => {
+        const model = gltf.scene;
+        model.position.set(1, 1, 0);
+        model.scale.set(0.01, 0.01, 0.01);
+        scene.add(model);
+        mixer = new THREE.AnimationMixer(model);
+        mixer.clipAction(gltf.animations[0]).play();
+        animate();
+      },
+      (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+      },
+      (e) => {
+        console.error(e);
+      }
+    );
+    window.addEventListener('resize', () => {
+      const containerHome = document.getElementById('home');
+      if (!containerHome) return;
+      camera.aspect = containerHome?.offsetWidth / containerHome?.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(containerHome?.offsetWidth, containerHome?.offsetHeight);
     });
+    function animate() {
+      requestAnimationFrame(animate);
 
-    document.getElementById('fileInputJson')?.addEventListener('change', function (e: any) {
-      // 读取json文件数据
-      let file = e.target?.files[0];
-      let reader = new FileReader();
+      const delta = clock.getDelta();
 
-      reader.onload = function (event) {
-        jsonDetails.value = JSON.parse(event.target?.result as string);
-        renderPoints();
-      };
+      mixer.update(delta);
 
-      reader.readAsText(file);
-    });
+      controls.update();
+
+      renderer.render(scene, camera);
+    }
   });
 </script>
-<style lang="scss" scoped></style>
+<style>
+  .home {
+    height: calc(100vh - 120px);
+  }
+</style>

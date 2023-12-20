@@ -4,13 +4,7 @@
       <template #title>
         <i :class="['iconfont', item.meta?.icon]"></i>
         <span :class="[login.isCollapse ? '' : 'ml-2']">
-          <TypeIt
-            :values="[$t(item.meta?.title + '')]"
-            :cursor="false"
-            :speed="50"
-            :className="item.meta?.class"
-          />
-          <!-- {{ $t(item.meta?.title + '') }} -->
+          {{ $t(item.meta?.title + '') }}
         </span>
       </template>
       <MenuTree :menu="item.children" :defaultActive="defaultActive" @clickItem="clickItemHandle" />
@@ -19,13 +13,7 @@
       <i :class="['iconfont', item.meta?.icon]"></i>
       <template #title>
         <span :class="[login.isCollapse ? '' : 'ml-2']">
-          <TypeIt
-            :values="[$t(item.meta?.title + '')]"
-            :cursor="false"
-            :speed="50"
-            :className="item.meta?.class"
-          />
-          <!-- {{ $t(item.meta?.title + '') }} -->
+          {{ $t(item.meta?.title + '') }}
         </span>
       </template>
     </el-menu-item>
@@ -34,7 +22,6 @@
 <script setup name="MenuTree" lang="ts">
   import useStore from '@/store';
   import { PropType } from 'vue';
-  import TypeIt from '@/components/ReTypeit';
   defineProps({
     menu: {
       type: Array as unknown as PropType<any[]>,
