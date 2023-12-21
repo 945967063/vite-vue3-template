@@ -20,8 +20,6 @@ export default defineStore('routers', {
      * @param roles
      */
     filterAsyncRoutes(routes: any[], roles: any) {
-      console.log('roles', roles);
-
       const res: any[] = [];
       routes.forEach((route) => {
         const tmp = { ...route };

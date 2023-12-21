@@ -140,7 +140,6 @@
   }
   const { login } = useStore();
   const loading = ref(false);
-  const router = useRouter();
   const ruleFormRef = ref<FormInstance>();
   const ruleForm = reactive<RuleForm>({
     userName: '',
@@ -170,7 +169,7 @@
             console.log(res);
             if (res.code === 201) {
               ElMessage.success('注册成功');
-              router.push('/');
+              login.current = 1;
             }
           })
           .finally(() => {

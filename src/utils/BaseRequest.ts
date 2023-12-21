@@ -3,6 +3,7 @@
  * 封装axios请求
  */
 import axios, { AxiosRequestConfig, Method } from 'axios';
+import refreshToken from './refreshToken';
 export default class RequestHelper {
   static source = axios.CancelToken.source();
 
@@ -33,21 +34,7 @@ export default class RequestHelper {
         if (tokens) {
           config.headers!['Authorization'] = `Bearer ${tokens.accessToken}`;
         }
-        // if (tokens) {
-        //   // 将 token 添加到请求报文头中
-        //   config.headers!['Authorization'] = `Bearer ${tokens.token}`;
 
-        //   // 判断 accessToken 是否过期
-        //   const jwt: any = decryptJWT(tokens.token);
-
-        //   const exp = getJWTDate(jwt.exp as number);
-
-        //   // token 已经过期
-        //   if (new Date() >= exp) {
-        //     // 携带刷新 token
-        //     config.headers!['X-Authorization'] = `Bearer ${tokens.refreshToken}`;
-        //   }
-        // }
         return config;
       },
       function (error: any) {
@@ -70,7 +57,7 @@ export default class RequestHelper {
         // 对响应错误做点什么
         const response = error && error.response ? error.response : null;
         if (response && response.status && response.status === 401) {
-          return ElMessage.error(response.data.data);
+          refreshToken(response);
         } else {
           if (response && response.data && [403].includes(response.status)) {
             return Promise.reject(error.response.data);
@@ -124,25 +111,4 @@ export default class RequestHelper {
   static async cancelAllRequest() {
     RequestHelper.source.cancel();
   }
-}
-
-/**
- * 解密 JWT token 的信息
- * @param token jwt token 字符串
- * @returns <any>object
- */
-export function decryptJWT(token: string): any {
-  token = token.replace(/_/g, '/').replace(/-/g, '+');
-  const json = decodeURIComponent(escape(window.atob(token.split('.')[1])));
-  return JSON.parse(json);
-}
-
-/**
- * 将 JWT 时间戳转换成 Date
- * @description 主要针对 `exp`，`iat`，`nbf`
- * @param timestamp 时间戳
- * @returns Date 对象
- */
-export function getJWTDate(timestamp: number): Date {
-  return new Date(timestamp * 1000);
 }

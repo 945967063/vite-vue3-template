@@ -44,3 +44,12 @@ export function updatePassword(params: { bodyParams: any }) {
     params: params,
   });
 }
+
+/**刷新token */
+export function refreshTokenApi(params: { params: any }) {
+  return RequestHelper.request({
+    url: 'user/refresh',
+    method: 'get',
+    params: params,
+  });
+}
