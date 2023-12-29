@@ -1,12 +1,17 @@
 import { Router, RouteRecordRaw } from 'vue-router';
 import NProgress from '@/utils/progress';
 import useStore from '@/store';
+import { versionCheck } from '@/utils/versionCheck';
+import { throttle } from '@/utils/method';
 
 // 白名单(不需要登录检测)
 const whiteList = ['/'];
 
 export function CreateRouterGuards(router: Router) {
   router.beforeEach(async (to) => {
+    if (import.meta.env.VITE_ENV === 'production') {
+      throttle(await versionCheck(), 5000);
+    }
     const { routers } = useStore();
     NProgress.start();
     const token = localStorage.getItem('vue3-admin-token');

@@ -45,6 +45,45 @@
 <script setup lang="ts">
   import OpenSeadragon from 'openseadragon';
   import axios from 'axios';
+  export interface TileOption {
+    /**
+     * 缩放比
+     */
+    scale?: number;
+    /**
+     * 瓦片：宽
+     */
+    sliceWidth?: number;
+    /**
+     * 瓦片：宽
+     */
+    sliceHeight?: number;
+    /**
+     * 切片：宽
+     */
+    srcWidth?: number;
+    /**
+     * 切片：高
+     */
+    srcHeight?: number;
+    /**
+     * 层数
+     */
+    hierarchy?: number;
+
+    gama?: number;
+    darkValue?: number;
+
+    fileSize?: number;
+    rate?: number;
+    sliceFmt?: number;
+    quality?: number;
+    timeConsuming?: string;
+    fusionLayer?: number;
+    step?: number;
+    serial?: string;
+    scanTime?: number;
+  }
 
   const downloadByOnlineUrl = (url: string) => {
     urlToBlobAndDownload(url);
@@ -137,6 +176,81 @@
     document.documentElement.style.setProperty('--image-sepia', '0%');
     document.documentElement.style.setProperty('--image-hue-rotate', '0deg');
   };
+  // //默认设置
+  // let defaultOptions: OpenSeadragon.Options = {
+  //   id: 'seadragon-viewer',
+  //   prefixUrl: '/openseadragon/',
+  //   navigatorAutoResize: true, // 导航器大小自动调整
+  //   showNavigator: true, // 显示导航图
+  //   placeholderFillStyle: '#f3f3f3', // 初始化时，图片未载入现实的样式，默认是白色
+  //   debugGridColor: ['#000000'],
+  //   minZoomImageRatio: 1,
+  //   zoomPerScroll: 2, // 滚轮放大倍率
+  //   navigatorOpacity: 1, // 导航图透明度
+  //   showZoomControl: false, // 不显示放大按钮
+  //   showHomeControl: false, // 显示主页按钮
+  //   showFullPageControl: false, // 显示全屏按钮
+  //   navigatorBackground: '#fff', // 导航背景颜色
+  //   navigatorBorderColor: '#fff', // 导航边框颜色
+  //   navigatorPosition: 'BOTTOM_LEFT',
+  //   gestureSettingsMouse: {
+  //     clickToZoom: false,
+  //   },
+  // };
+  // const viewer = ref(); //openSeadragon查看器类
+
+  // const createViewer = async (urlPath: string) => {
+  //   const extraInfo = await getExtraInfo(urlPath);
+  //   const openSeadragonOptions = await intOption(urlPath, extraInfo);
+  //   let view = OpenSeadragon(openSeadragonOptions);
+  //   viewer.value(view);
+  // };
+
+  // //初始化设置
+  // const intOption = async (urlPath: string, extraInfo: TileOption) => {
+  //   const openSeadragonOptions = { ...defaultOptions };
+
+  //   openSeadragonOptions.minPixelRatio = extraInfo.scale; // 默认为0.5 需根据切片倍率设置 最小像素比.值越小，清晰度越高，体积越大
+  //   const maxLevel = (extraInfo.hierarchy as any) - 1;
+  //   (openSeadragonOptions.tileSources as any) = {
+  //     tileWidth: extraInfo.sliceWidth,
+  //     tileHeight: extraInfo.sliceHeight,
+  //     height: extraInfo.srcHeight,
+  //     width: extraInfo.srcWidth,
+  //     maxLevel: maxLevel,
+  //     minLevel: 0,
+  //     getTileUrl: function (level: number, x: number, y: number) {
+  //       return `http://120.79.57.164:7013/api/SliceService/image-slices/${urlPath}/tile?Level=${
+  //         maxLevel - level
+  //       }&X=${x}&Y=${y}`;
+  //     },
+  //   };
+  //   setLevelScale(openSeadragonOptions, openSeadragonOptions.minPixelRatio);
+  //   return openSeadragonOptions;
+  // };
+  // const getExtraInfo = async (urlPath: string): Promise<TileOption> => {
+  //   return axios.get(`http://120.79.57.164:7013/api/SliceService/image-slices/${urlPath}/info`, {
+  //     headers: {
+  //       'Access-Control-Allow-Origin': '*',
+  //       'Access-Control-Allow-Headers': 'X-Requested-With',
+  //     },
+  //   });
+  // };
+
+  // const setLevelScale = (openSeadragonOptions: OpenSeadragon.Options, ratio: number = 0.5) => {
+  //   (openSeadragonOptions.tileSources as any).getLevelScale = function (level: number): any {
+  //     const levelScaleCache: { [key: number]: number } = {};
+  //     let i;
+  //     for (i = 0; i <= this.maxLevel; i++) {
+  //       levelScaleCache[i] = 1 / Math.pow(1 / ratio, this.maxLevel - i);
+  //     }
+  //     this.getLevelScale = function (_level: number) {
+  //       return levelScaleCache[_level];
+  //     };
+  //     return this.getLevelScale(level);
+  //   };
+  // };
+
   onMounted(() => {
     let duomo = {
       Image: {
@@ -158,6 +272,10 @@
       tileSources: duomo,
     });
   });
+  // const urlPath = ref('18416799b3b501858030ce8e92b898f5');
+  // onMounted(async () => {
+  //   createViewer(urlPath.value);
+  // });
 </script>
 <style lang="scss" scoped>
   #seadragon-viewer {
@@ -167,6 +285,7 @@
       sepia(var(--image-sepia)) hue-rotate(var(--image-hue-rotate));
   }
   .colorClass {
+    margin-left: 20px;
     width: 400px;
   }
   .slider-demo-block {

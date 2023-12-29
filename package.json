@@ -18,13 +18,13 @@
     "api": "rimraf ./src/servicesDefault && pont list"
   },
   "dependencies": {
-    "@types/openseadragon": "^3.0.10",
+    "@types/openseadragon": "^2.4.8",
     "@types/three": "^0.159.0",
     "@vueuse/core": "^10.6.1",
     "axios": "^1.6.2",
     "element-plus": "^2.4.3",
     "nprogress": "^0.2.0",
-    "openseadragon": "^4.1.0",
+    "openseadragon": "^2.4.2",
     "particles.vue3": "^2.12.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",

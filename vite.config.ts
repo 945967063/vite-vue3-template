@@ -5,6 +5,7 @@ import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import path from 'path';
 const Timestamp = new Date().getTime();
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -17,6 +18,10 @@ export default defineConfig(({ mode }) => {
           additionalData: `@use "~/assets/styles/element-variarbles.scss" as *;`,
         },
       },
+    },
+    define: {
+      // 定义全局变量
+      'process.env.VITE__APP_VERSION__': Timestamp,
     },
     plugins: [
       vue(),
