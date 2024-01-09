@@ -17,6 +17,9 @@ dependencies:
   axios:
     specifier: ^1.6.2
     version: registry.npmmirror.com/axios@1.6.2
+  dragselect:
+    specifier: ^3.0.4
+    version: registry.npmmirror.com/dragselect@3.0.4
   element-plus:
     specifier: ^2.4.3
     version: registry.npmmirror.com/element-plus@2.4.3(vue@3.3.8)
@@ -2400,6 +2403,12 @@ packages:
     dependencies:
       is-obj: registry.npmmirror.com/is-obj@2.0.0
     dev: true
+
+  registry.npmmirror.com/dragselect@3.0.4:
+    resolution: {integrity: sha512-LkGjPpkBGsIFyM9UsOM0wkMhUHuwhlHCDouufy2Zyroghhoj0RHSXnl78imvDWdlvFUk3Q5SXTXh0HfAC/NMrw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/dragselect/-/dragselect-3.0.4.tgz}
+    name: dragselect
+    version: 3.0.4
+    dev: false
 
   registry.npmmirror.com/ecc-jsbn@0.1.2:
     resolution: {integrity: sha512-eh9O+hwRHNbG4BLTjEl3nw044CkGm5X6LoaCf7LPp7UU8Qrt47JYNi6nPX8xjW97TKGKm1ouctg0QSpZe9qrnw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ecc-jsbn/-/ecc-jsbn-0.1.2.tgz}
