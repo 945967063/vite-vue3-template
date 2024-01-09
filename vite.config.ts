@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import versionUpdatePlugin from './src/utils/versionUpdatePlugin';
 import path from 'path';
 const Timestamp = new Date().getTime();
 
@@ -31,6 +32,10 @@ export default defineConfig(({ mode }) => {
         resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
       }),
       Components({ resolvers: [ElementPlusResolver({ importStyle: 'sass' })] }),
+      // 版本更新插件
+      versionUpdatePlugin({
+        version: Timestamp,
+      }),
     ],
     //配置路径别名
     resolve: {
