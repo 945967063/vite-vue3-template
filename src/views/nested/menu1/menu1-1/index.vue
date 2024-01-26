@@ -32,11 +32,18 @@
 </script>
 
 <template>
-  <div id="area" class="w-[500px] h-[500px] border-[1px] border-[#134973] flex flex-wrap">
-    <div
-      class="selectable-nodes w-[50px] h-[50px] border-[1px] m-6 border-[#134973]"
-      v-for="item in 25"
-      :key="item"
-    ></div>
-  </div>
+  <el-card class="box-card">
+    <template #header>
+      <div class="card-header">
+        <span>鼠标右键点击拖动选中</span>
+      </div>
+    </template>
+    <div id="area" class="w-[500px] h-[500px] border-[1px] border-[#134973] flex flex-wrap">
+      <div
+        class="selectable-nodes w-[50px] h-[50px] border-[1px] m-6 border-[#134973]"
+        v-for="item in 25"
+        :key="item"
+      ></div>
+    </div>
+  </el-card>
 </template>
