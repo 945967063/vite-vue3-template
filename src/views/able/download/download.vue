@@ -18,22 +18,55 @@
 
         <div class="colorClass">
           <div class="slider-demo-block">
-            <span class="demonstration">对比度</span>
-            <el-slider v-model="contrast" :min="0" :max="800" @change="changeContrast" />
-          </div>
-          <div class="slider-demo-block">
             <span class="demonstration">亮度</span>
-            <el-slider v-model="brightness" :min="0" :max="1500" @change="changeBrightness" />
+            <el-slider
+              v-model="brightness"
+              :min="-255"
+              :max="255"
+              @input="changeFilter($event, 'brightness')"
+            />
           </div>
           <div class="slider-demo-block">
-            <span class="demonstration">深褐色</span>
-            <el-slider v-model="sepia" :min="0" :max="100" @change="changeSepia" />
+            <span class="demonstration">伽马</span>
+            <el-slider
+              v-model="gamma"
+              :min="0"
+              :step="0.1"
+              :max="5"
+              @input="changeFilter($event, 'gamma')"
+            />
           </div>
           <div class="slider-demo-block">
-            <span class="demonstration">旋转</span>
-            <el-slider v-model="rotate" :min="0" :max="360" @change="changeRotate" />
+            <span class="demonstration">对比度</span>
+            <el-slider
+              v-model="contrast"
+              :min="-255"
+              :max="255"
+              @input="changeFilter($event, 'contrast')"
+            />
           </div>
-
+          <div class="slider-demo-block">
+            <span class="demonstration">红</span>
+            <el-slider v-model="red" :min="-255" :max="255" @input="changeFilter($event, 'red')" />
+          </div>
+          <div class="slider-demo-block">
+            <span class="demonstration">绿</span>
+            <el-slider
+              v-model="green"
+              :min="-255"
+              :max="255"
+              @input="changeFilter($event, 'green')"
+            />
+          </div>
+          <div class="slider-demo-block">
+            <span class="demonstration">蓝</span>
+            <el-slider
+              v-model="blue"
+              :min="-255"
+              :max="255"
+              @input="changeFilter($event, 'blue')"
+            />
+          </div>
           <div class="slider-demo-block">
             <el-button type="primary" @click="resetClick">重置</el-button>
           </div>
@@ -44,6 +77,7 @@
 </template>
 <script setup lang="ts">
   import OpenSeadragon from 'openseadragon';
+  import FilterPlugin from 'filterplugin';
   import axios from 'axios';
   export interface TileOption {
     /**
@@ -148,34 +182,33 @@
       }
     );
   }
-  const contrast = ref(100);
-  const changeContrast = (val: any) => {
-    document.documentElement.style.setProperty('--image-contrast', val + '%');
-  };
-  const brightness = ref(100);
-  const changeBrightness = (val: any) => {
-    document.documentElement.style.setProperty('--image-brightness', val + '%');
-  };
-  const sepia = ref(0);
-  const changeSepia = (val: any) => {
-    document.documentElement.style.setProperty('--image-sepia', val + '%');
-  };
+  // const changeContrast = (val: any) => {
+  //   document.documentElement.style.setProperty('--image-contrast', val + '%');
+  // };
+  // const brightness = ref(100);
+  // const changeBrightness = (val: any) => {
+  //   document.documentElement.style.setProperty('--image-brightness', val + '%');
+  // };
+  // const sepia = ref(0);
+  // const changeSepia = (val: any) => {
+  //   document.documentElement.style.setProperty('--image-sepia', val + '%');
+  // };
 
-  const rotate = ref(0);
-  const changeRotate = (val: any) => {
-    document.documentElement.style.setProperty('--image-hue-rotate', val + 'deg');
-  };
+  // const rotate = ref(0);
+  // const changeRotate = (val: any) => {
+  //   document.documentElement.style.setProperty('--image-hue-rotate', val + 'deg');
+  // };
 
-  const resetClick = () => {
-    contrast.value = 100;
-    brightness.value = 100;
-    sepia.value = 0;
-    rotate.value = 0;
-    document.documentElement.style.setProperty('--image-contrast', '100%');
-    document.documentElement.style.setProperty('--image-brightness', '100%');
-    document.documentElement.style.setProperty('--image-sepia', '0%');
-    document.documentElement.style.setProperty('--image-hue-rotate', '0deg');
-  };
+  // const resetClick = () => {
+  //   contrast.value = 100;
+  //   brightness.value = 100;
+  //   sepia.value = 0;
+  //   rotate.value = 0;
+  //   document.documentElement.style.setProperty('--image-contrast', '100%');
+  //   document.documentElement.style.setProperty('--image-brightness', '100%');
+  //   document.documentElement.style.setProperty('--image-sepia', '0%');
+  //   document.documentElement.style.setProperty('--image-hue-rotate', '0deg');
+  // };
   // //默认设置
   // let defaultOptions: OpenSeadragon.Options = {
   //   id: 'seadragon-viewer',
@@ -250,6 +283,73 @@
   //     return this.getLevelScale(level);
   //   };
   // };
+  // OpenSeadragon.Viewer.prototype.setFilterOptions = function (options) {
+  //   console.log(options);
+  // };
+  const view = ref();
+  const gamma = ref(1);
+  //亮度
+  const brightness = ref(0);
+  //对比度
+  const contrast = ref(0);
+  //红
+  const red = ref(0);
+  //绿
+  const green = ref(0);
+  //蓝
+  const blue = ref(0);
+  const changeFilter = (val: any, type: string) => {
+    view.value.navigator.setFilterOptions = view.value.setFilterOptions;
+    view.value.setFilterOptions({
+      filters: {
+        processors: [filter(val, type)],
+      },
+    });
+    view.value.navigator.setFilterOptions({
+      filters: {
+        processors: [filter(val, type)],
+      },
+    });
+  };
+
+  //过滤方法
+  const filter = (val: number, type: string) => {
+    switch (type) {
+      case 'gamma':
+        return FilterPlugin.Filters.GAMMA(val);
+      case 'contrast':
+        return FilterPlugin.Filters.CONTRAST(val);
+      case 'red':
+        return FilterPlugin.Filters.RED(val);
+      case 'green':
+        return FilterPlugin.Filters.GREEN(val);
+      case 'blue':
+        return FilterPlugin.Filters.BLUE(val);
+      case 'brightness':
+        return FilterPlugin.Filters.BRIGHTNESS(val);
+      default:
+        break;
+    }
+  };
+  //重置
+  const resetClick = () => {
+    gamma.value = 1;
+    contrast.value = 0;
+    red.value = 0;
+    green.value = 0;
+    blue.value = 0;
+    brightness.value = 0;
+    view.value.setFilterOptions({
+      filters: {
+        processors: [],
+      },
+    });
+    view.value.navigator.setFilterOptions({
+      filters: {
+        processors: [],
+      },
+    });
+  };
 
   onMounted(() => {
     let duomo = {
@@ -266,10 +366,13 @@
       },
     };
 
-    OpenSeadragon({
+    view.value = OpenSeadragon({
       id: 'seadragon-viewer',
       prefixUrl: '//openseadragon.github.io/openseadragon/images/',
       tileSources: duomo,
+      showNavigator: true,
+      navigatorAutoFade: false,
+      crossOriginPolicy: 'Anonymous',
     });
   });
   // const urlPath = ref('18416799b3b501858030ce8e92b898f5');

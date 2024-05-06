@@ -24,6 +24,7 @@
     "axios": "^1.6.2",
     "dragselect": "^3.0.4",
     "element-plus": "^2.4.3",
+    "filterplugin": "^1.0.6",
     "nprogress": "^0.2.0",
     "openseadragon": "^2.4.2",
     "particles.vue3": "^2.12.0",
